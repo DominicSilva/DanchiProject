@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Responder Mensaje";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Danchi.Models.Mensaje
+
+<h2>Responder a: @(Model.Receptor != null ? Model.Receptor.Nombres + " " + Model.Receptor.Apellidos : "Usuario")</h2>
+
+@using (Html.BeginForm("Reply", "Mensajes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.IdReceptor)
+    @Html.HiddenFor(m => m.MensajePadreId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Asunto)
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Asunto, new { @class = "form-control", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mt-2">
+        @Html.LabelFor(model => model.Descripcion)
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = 5 })
+            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mt-2">
+        @Html.LabelFor(model => model.ArchivoAdjunto, "Archivo Soporte (Opcional)")
+        <div class="col-md-10">
+            <input type="file" name="archivo" class="form-control" accept=".pdf,application/pdf" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Enviar Respuesta</button>
+    <a href="@Url.Action("Index", "Mensajes")" class="btn btn-secondary mt-3">Cancelar</a>
+}
+

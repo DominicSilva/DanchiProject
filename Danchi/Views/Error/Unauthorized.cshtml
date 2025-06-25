@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Acceso Denegado";
+}
+
+<div class="container text-center mt-5">
+    <div class="card shadow border-left-danger p-4">
+        <div class="card-body">
+            <h1 class="display-4 text-danger"><i class="fas fa-ban"></i> Acceso Denegado</h1>
+            <p class="lead">No tienes permiso para acceder a esta sección.</p>
+            <hr />
+            <p>Si crees que esto es un error, por favor contacta con el administrador del sistema.</p>
+
+            @if (Danchi.Utils.SessionHelper.Rol == "Administrador")
+            {
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary mt-3"><i class="fas fa-home"></i> Volver al inicio</a>
+            }
+            else
+            {
+                <a href="@Url.Action("UserView", "Home")" class="btn btn-primary mt-3"><i class="fas fa-home"></i> Volver al inicio</a>
+            }
+        </div>
+    </div>
+</div>

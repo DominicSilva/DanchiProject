@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Danchi.Models.Aviso>
+@{
+    ViewBag.Title = "AvisoView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var aviso in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 border-left-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">
+                            <i class="fas fa-bullhorn"></i> @aviso.Titulo
+                        </h5>
+                        <p class="card-text">@aviso.Descripcion</p>
+                    </div>
+                    <div class="card-footer text-muted small d-flex justify-content-between">
+                        <span>@aviso.FechaCreacion.ToString("dd/MM/yyyy")</span>
+                        <span class="badge badge-@(aviso.Estado ? "success" : "secondary")">
+                            @(aviso.Estado ? "Activo" : "Inactivo")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

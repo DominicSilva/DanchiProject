@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Danchi.Models.Reserva>
+
+@{
+    ViewBag.Title = "Reservas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: @Html.Raw(HttpUtility.JavaScriptStringEncode(TempData["SuccessMessage"].ToString(), true)),
+            confirmButtonText: 'Aceptar',
+            timer: 3000
+        });
+    </script>
+}
+
+<div class="text-center">
+    <h2>Reservas</h2>
+</div>
+
+<div class="d-flex justify-content-between mb-3">
+    <div>
+        @Html.ActionLink("Nueva Reserva", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+    @if (Danchi.Utils.SessionHelper.Rol == "Administrador")
+    {
+        <div>
+            @Html.ActionLink("Exportar a PDF", "ExportarEventosPDF", "Reservas", null, new { @class = "btn btn-danger" })
+        </div>
+    }
+</div>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.Raw("Usuario")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Zona)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaReserva)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HoraInicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HoraFin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumInvitados)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @(item.Usuario.Nombres + " " + item.Usuario.Apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zona)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaReserva)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraFin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumInvitados)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.IdReserva })
+            </td>
+            <td>
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdReserva })
+            </td>
+        </tr>
+    }
+
+</table>

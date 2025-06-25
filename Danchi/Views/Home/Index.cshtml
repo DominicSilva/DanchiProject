@@ -1,0 +1,159 @@
+﻿@model Danchi.Models.DashboardViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="container-fluid">
+    <h1 class="h4 mb-4 text-gray-800">Panel de Control</h1>
+
+    <div class="row">
+        <!-- Tarjetas resumen -->
+        <div class="col-md-3 mb-3">
+            <div class="card border-left-primary shadow h-100 py-1">
+                <div class="card-body d-flex align-items-center">
+                    <div class="mr-2">
+                        <i class="fas fa-building fa-lg text-gray-300"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Torres</div>
+                        <div class="mb-0 font-weight-bold text-gray-800" style="font-size: 1rem;">@Model.TotalTorres</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-left-success shadow h-100 py-1">
+                <div class="card-body d-flex align-items-center">
+                    <div class="mr-2">
+                        <i class="fas fa-door-open fa-lg text-gray-300"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Apartamentos</div>
+                        <div class="mb-0 font-weight-bold text-gray-800" style="font-size: 1rem;">@Model.TotalAptos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-left-info shadow h-100 py-1">
+                <div class="card-body d-flex align-items-center">
+                    <div class="mr-2">
+                        <i class="fas fa-users fa-lg text-gray-300"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Propietarios</div>
+                        <div class="mb-0 font-weight-bold text-gray-800" style="font-size: 1rem;">@Model.TotalPropietarios</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Mensajes Enviados y Recibidos</div>
+                <div class="card-body" style="padding: 0.5rem 1rem;">
+                    <canvas id="mensajesChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Eventos y Reservas</div>
+                <div class="card-body" style="padding: 0.5rem 1rem;">
+                    <canvas id="eventosReservasChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const mensajesEnviados = @Html.Raw(Json.Encode(Model.MensajesEnviadosPorMes));
+        const mensajesRecibidos = @Html.Raw(Json.Encode(Model.MensajesRecibidosPorMes));
+        const eventos = @Html.Raw(Json.Encode(Model.EventosPorMes));
+        const reservas = @Html.Raw(Json.Encode(Model.ReservasPorMes));
+
+        const meses = Array.from(new Set([
+            ...Object.keys(mensajesEnviados),
+            ...Object.keys(mensajesRecibidos),
+            ...Object.keys(eventos),
+            ...Object.keys(reservas)
+        ])).sort();
+
+        const enviadosData = meses.map(m => mensajesEnviados[m] || 0);
+        const recibidosData = meses.map(m => mensajesRecibidos[m] || 0);
+        const eventosData = meses.map(m => eventos[m] || 0);
+        const reservasData = meses.map(m => reservas[m] || 0);
+
+        new Chart(document.getElementById("mensajesChart"), {
+            type: 'bar',
+            data: {
+                labels: meses,
+                datasets: [
+                    {
+                        label: "Enviados",
+                        backgroundColor: "#4e73df",
+                        data: enviadosData,
+                        barThickness: 20
+                    },
+                    {
+                        label: "Recibidos",
+                        backgroundColor: "#1cc88a",
+                        data: recibidosData,
+                        barThickness: 20
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, ticks: { font: { size: 10 } } },
+                    x: { ticks: { font: { size: 10 } } }
+                },
+                plugins: {
+                    legend: { labels: { font: { size: 10 } } }
+                }
+            }
+        });
+
+        new Chart(document.getElementById("eventosReservasChart"), {
+            type: 'bar',
+            data: {
+                labels: meses,
+                datasets: [
+                    {
+                        label: "Eventos",
+                        backgroundColor: "#36b9cc",
+                        data: eventosData,
+                        barThickness: 20
+                    },
+                    {
+                        label: "Reservas",
+                        backgroundColor: "#f6c23e",
+                        data: reservasData,
+                        barThickness: 20
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, ticks: { font: { size: 10 } } },
+                    x: { ticks: { font: { size: 10 } } }
+                },
+                plugins: {
+                    legend: { labels: { font: { size: 10 } } }
+                }
+            }
+        });
+    </script>
+}

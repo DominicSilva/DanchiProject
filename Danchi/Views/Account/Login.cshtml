@@ -1,0 +1,84 @@
+﻿@using Danchi.Models
+@model Login
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="~/Styles/Login.css" rel="stylesheet" />
+    <link href="~/Content/SBAdmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/SBAdmin2/css/sb-admin-2.min.css" rel="stylesheet" />
+    <title>Inicio de Sesión</title>
+</head>
+<body>
+
+    @if (TempData["AlertMessage"] != null)
+    {
+        <script>
+    Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: @Html.Raw(HttpUtility.JavaScriptStringEncode(TempData["AlertMessage"].ToString(), true)),
+        confirmButtonText: 'Aceptar',
+        timer: 3000
+    });
+        </script>
+    }
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+            <div class="col-xl-5 col-lg-6 col-md-8">
+                <div class="card o-hidden my-5">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-user-shield logo-icon mb-3"></i>
+                            <h1 class="h4 text-gray-900">Bienvenido a Danchi</h1>
+                            <p class="text-muted">Inicio de Sesión</p>
+                        </div>
+
+                        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @autocomplete = "off" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group mb-3">
+                                <i class="fas fa-envelope form-icon"></i>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-user", placeholder = "Correo electrónico" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <i class="fas fa-lock form-icon"></i>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-user", placeholder = "Contraseña" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <button type="submit" class="btn btn-user btn-block">
+                                <i class="fas fa-sign-in-alt me-2"></i> Iniciar Sesión
+                            </button>
+                        }
+
+                        <hr />
+                        <div class="text-center">
+                            <small class="text-muted">&copy; @DateTime.Now.Year - Danchi</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/SBAdmin2/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/SBAdmin2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/SBAdmin2/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

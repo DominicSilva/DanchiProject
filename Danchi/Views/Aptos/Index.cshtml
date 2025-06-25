@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Danchi.Models.Apto>
+
+@{
+    ViewBag.Title = "Apartamentos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: @Html.Raw(HttpUtility.JavaScriptStringEncode(TempData["SuccessMessage"].ToString(), true)),
+            confirmButtonText: 'Aceptar',
+            timer: 3000
+        });
+    </script>
+}
+
+<div class="text-center">
+    <h2>Apartamentos</h2>
+</div>
+
+<div class="d-flex justify-content-between mb-3">
+    <div>
+        @Html.ActionLink("Nuevo Apartamento", "Create", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Torre.NombreTorre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreApto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Torre.NombreTorre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreApto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCreacion)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.IdApto })
+            </td>
+            <td>
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdApto })
+            </td>
+        </tr>
+    }
+
+</table>

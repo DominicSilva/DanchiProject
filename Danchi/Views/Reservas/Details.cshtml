@@ -1,0 +1,67 @@
+﻿@model Danchi.Models.Reserva
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zona)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zona)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaReserva)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaReserva)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoraInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoraInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoraFin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoraFin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumInvitados)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumInvitados)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdReserva }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

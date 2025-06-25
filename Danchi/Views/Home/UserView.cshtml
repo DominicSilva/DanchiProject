@@ -1,0 +1,80 @@
+﻿
+@model Danchi.Models.UsuarioDashboardViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Bienvenido";
+}
+
+<div class="container-fluid">
+    <div class="row mt-4">
+        <div class="col-md-12 mb-4">
+            <div class="jumbotron bg-light shadow p-4">
+                <h2 class="display-6">Hola, @Model.NombreCompleto</h2>
+                <p class="lead">Bienvenido al sistema. Aquí puedes ver tus mensajes más recientes y acceder rápidamente a funcionalidades importantes.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensajes Recientes -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-envelope"></i> Mensajes Recientes No Leídos
+                </div>
+                <div class="card-body">
+                    @if (Model.MensajesNoLeidos.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var mensaje in Model.MensajesNoLeidos.Take(5))
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>@mensaje.Asunto</strong><br />
+                                        <small class="text-muted">@mensaje.FechaEnvio.ToString("dd/MM/yyyy HH:mm")</small>
+                                    </div>
+                                    <a href="@Url.Action("Details", "Mensajes", new { id = mensaje.IdMensaje })" class="btn btn-sm btn-outline-primary">Ver</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No tienes mensajes nuevos.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accesos rápidos -->
+    <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-calendar-check fa-2x text-primary mb-2"></i>
+                    <h5 class="card-title">Mis Reservas</h5>
+                    <a href="@Url.Action("Index", "Reservas")" class="btn btn-primary btn-sm mt-2">Ver Reservas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-bullhorn fa-2x text-warning mb-2"></i>
+                    <h5 class="card-title">Avisos</h5>
+                    <a href="@Url.Action("AvisoView", "Avisos")" class="btn btn-warning btn-sm mt-2 text-white">Ver Avisos</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-calendar-alt fa-2x text-info mb-2"></i>
+                    <h5 class="card-title">Eventos</h5>
+                    <a href="@Url.Action("EventoView", "Eventos")" class="btn btn-info btn-sm mt-2 text-white">Ver Eventos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

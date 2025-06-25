@@ -1,0 +1,60 @@
+﻿@model Danchi.Models.Mensaje
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalle del Mensaje</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5><strong>De:</strong> @Model.Emisor.Correo</h5>
+        <h5><strong>Para:</strong> @Model.Receptor.Correo</h5>
+        <h5><strong>Asunto:</strong> @Model.Asunto</h5>
+        <p><strong>Fecha:</strong> @Model.FechaEnvio.ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>Mensaje:</strong><br />@Model.Descripcion</p>
+
+        @if (!string.IsNullOrEmpty(Model.ArchivoAdjunto))
+        {
+            <p>
+                <strong>Archivo adjunto:</strong>
+                @Html.ActionLink("Descargar", "DescargarArchivo", new { id = Model.IdMensaje }, new { @class = "btn btn-sm btn-outline-secondary" })
+            </p>
+        }
+
+        <hr />
+        <h5>Mensajes:</h5>
+        @if (Model.Respuestas != null && Model.Respuestas.Any())
+        {
+            foreach (var respuesta in Model.Respuestas.OrderBy(r => r.FechaEnvio))
+            {
+                <div class="border rounded p-2 mb-2">
+                    <p><strong>@respuesta.Emisor.Correo</strong> (@respuesta.FechaEnvio.ToString("dd/MM/yyyy HH:mm"))</p>
+                    <p>@respuesta.Descripcion</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted">Sin respuestas.</p>
+        }
+        <hr />
+        <h5>Respuestas:</h5>
+        @using (Html.BeginForm("Create", "Mensajes", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("IdReceptor", Model.IdEmisor)
+            @Html.Hidden("MensajePadreId", Model.IdMensaje)
+            @Html.Hidden("Asunto", "RE: " + Model.Asunto)
+
+            <div class="form-group">
+                @Html.TextArea("Descripcion", null, new { @class = "form-control", rows = 4, placeholder = "Escribe tu respuesta..." })
+            </div>
+            <button type="submit" class="btn btn-success">Enviar respuesta</button>
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

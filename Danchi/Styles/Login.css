@@ -1,0 +1,172 @@
+﻿body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    background-color: #f0f2f5;
+}
+
+/* Video de fondo */
+#background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    object-fit: cover;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Animaciones */
+@keyframes swing {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(10deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 4px rgba(34, 74, 190, 0.6));
+    }
+
+    50% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 10px rgba(34, 74, 190, 0.8));
+    }
+}
+
+/* Icono animado (ej. logo) */
+.logo-icon {
+    font-size: 4rem;
+    color: #224abe;
+    text-shadow: 1px 1px 4px rgba(34, 74, 190, 0.6);
+    animation: swing 3s ease-in-out infinite, pulse 4s ease-in-out infinite;
+    display: inline-block;
+    transform-origin: 50% 70%;
+}
+
+/* Icono dentro de input */
+.form-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #224abe;
+    opacity: 0.7;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Grupo de formulario */
+.form-group {
+    position: relative;
+}
+
+/* Icono fijo a la izquierda del input */
+.form-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #224abe;
+    opacity: 0.7;
+    font-size: 1rem;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Input con espacio a la izquierda para el icono */
+.form-control-user {
+    padding-left: 2.5rem; /* espacio suficiente para el icono */
+    height: 3rem;
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    border: 1.5px solid #224abe;
+    transition: border-color 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+    .form-control-user::placeholder {
+        color: #6c757d;
+        opacity: 1; /* asegúrate que el placeholder sea visible */
+    }
+
+/* Input personalizado */
+.form-control-user {
+    padding-left: 2.8rem; /* espacio para el icono */
+    height: 3rem;
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    border: 1.5px solid #224abe;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .form-control-user:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 8px rgba(78, 115, 223, 0.6);
+        outline: none;
+    }
+
+/* Botón login */
+.btn-user {
+    padding: 0.75rem;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    background: linear-gradient(45deg, #224abe, #4e73df);
+    border: none;
+    color: #fff;
+    transition: background 0.3s ease;
+}
+
+    .btn-user:hover {
+        background: linear-gradient(45deg, #2e54d4, #385cdb);
+    }
+
+/* Colores */
+.text-gray-900 {
+    color: #224abe !important;
+    font-weight: 700;
+}
+
+.text-muted {
+    color: #3a4e84 !important;
+}
+
+/* Alerta */
+.alert-danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}

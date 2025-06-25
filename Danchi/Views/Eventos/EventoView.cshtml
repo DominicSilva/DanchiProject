@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<Danchi.Models.Evento>
+
+<div class="container">
+    <div class="row">
+        @foreach (var evento in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card border-0 shadow h-100 rounded-lg">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-calendar-alt"></i> @evento.Titulo
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2 text-muted">
+                            <i class="fas fa-map-marker-alt"></i> @evento.Lugar
+                        </p>
+                        <p class="mb-2">
+                            <strong>Fecha:</strong> @evento.FechaEvento.ToString("dd/MM/yyyy")<br />
+                            <strong>Hora:</strong> @evento.HoraInicio - @evento.HoraFin
+                        </p>
+                        <p>@evento.Descripcion</p>
+                    </div>
+                    <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+                        <small class="text-muted">Creado: @evento.FechaCreacion.ToString("dd/MM/yyyy")</small>
+                        <span class="badge badge-@(evento.Estado ? "success" : "secondary")">
+                            @(evento.Estado ? "Activo" : "Inactivo")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
