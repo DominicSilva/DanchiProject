@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort>44346</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -236,6 +236,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\images\danchi-logo.png" />
+    <Content Include="Content\images\inicio-background.jpg" />
+    <Content Include="Content\images\login-logo.png.jpg" />
+    <Content Include="Content\images\logo.jpg" />
     <Content Include="Content\SBAdmin2\css\sb-admin-2.css" />
     <Content Include="Content\SBAdmin2\css\sb-admin-2.min.css" />
     <Content Include="Content\SBAdmin2\vendor\fontawesome-free\attribution.js" />
