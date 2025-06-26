@@ -6,35 +6,116 @@
 
 @model IEnumerable<Danchi.Models.Evento>
 
+<style>
+.evento-card {
+    border-radius: 1.2rem !important;
+    box-shadow: 0 6px 32px #b9b6ec29, 0 2px 12px #8de4ef35;
+    border: 2.5px solid #e0f6fa !important;
+    background: #fff;
+    transition: transform .13s, box-shadow .14s;
+    overflow: hidden;
+    position: relative;
+}
+    .evento-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 12px 40px #ffb6b975; /* ← sombra rosada */
+        border-color: #ffb6b9 !important; /* ← borde rosado */
+    }
+    .evento-card .evento-header {
+        background: linear-gradient(90deg, #7c7474 70%, #ffb6b9 100%);
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.13rem;
+        padding: 0.72rem 1.1rem;
+        border-radius: 1.2rem 1.2rem 0 0;
+        margin-bottom: .7rem;
+        display: flex;
+        align-items: center;
+        gap: 0.57rem;
+    }
+.evento-card .evento-header i {
+    font-size: 1.5rem;
+    color: #fff;
+    filter: drop-shadow(0 2px 8px #00ced133);
+}
+.evento-card .evento-info {
+    color: #1d5462;
+    font-size: 1.02rem;
+    margin-bottom: .4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.47rem;
+}
+.evento-card .evento-info i {
+    color: #36b7c9;
+    font-size: 1.02rem;
+}
+.evento-card .evento-desc {
+    color: #383838;
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+}
+.evento-card .card-footer {
+    background: #f2f7fa;
+    border-top: none;
+    font-size: 0.97rem;
+    padding: 0.56rem 1.1rem;
+}
+.evento-card .badge-success {
+    background: linear-gradient(90deg, #3dd598 60%, #92f2c3 100%);
+    color: #205f37;
+    font-weight: 600;
+    border-radius: 1rem;
+    padding: 0.26rem 0.9rem;
+    font-size: 0.98rem;
+    box-shadow: 0 2px 8px #a0ffc433;
+}
+.evento-card .badge-secondary {
+    background: #e7e7e7;
+    color: #888;
+    font-weight: 600;
+    border-radius: 1rem;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.98rem;
+}
+@@media (max-width: 767px) {
+    .evento-card { font-size: 1rem; }
+    .evento-card .evento-header { font-size: 1.06rem; }
+}
+</style>
+
 <div class="container">
     <div class="row">
         @foreach (var evento in Model)
         {
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card border-0 shadow h-100 rounded-lg">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">
-                            <i class="fas fa-calendar-alt"></i> @evento.Titulo
-                        </h5>
+            <div class="col-md-4 mb-4">
+                <div class="card evento-card h-100">
+                    <div class="evento-header">
+                        <i class="fas fa-calendar-alt"></i> @evento.Titulo
                     </div>
-                    <div class="card-body">
-                        <p class="mb-2 text-muted">
+                    <div class="card-body py-2">
+                        <div class="evento-info">
                             <i class="fas fa-map-marker-alt"></i> @evento.Lugar
-                        </p>
-                        <p class="mb-2">
-                            <strong>Fecha:</strong> @evento.FechaEvento.ToString("dd/MM/yyyy")<br />
-                            <strong>Hora:</strong> @evento.HoraInicio - @evento.HoraFin
-                        </p>
-                        <p>@evento.Descripcion</p>
+                        </div>
+                        <div class="evento-info">
+                            <b>Fecha:</b> @evento.FechaEvento.ToString("dd/MM/yyyy")
+                        </div>
+                        <div class="evento-info">
+                            <b>Hora:</b> @evento.HoraInicio.ToString(@"hh\:mm") - @evento.HoraFin.ToString(@"hh\:mm")
+                        </div>
+                        <div class="evento-desc">
+                            @evento.Descripcion
+                        </div>
                     </div>
-                    <div class="card-footer bg-light d-flex justify-content-between align-items-center">
-                        <small class="text-muted">Creado: @evento.FechaCreacion.ToString("dd/MM/yyyy")</small>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <span class="text-muted small">Creado: @evento.FechaCreacion.ToString("dd/MM/yyyy")</span>
                         <span class="badge badge-@(evento.Estado ? "success" : "secondary")">
                             @(evento.Estado ? "Activo" : "Inactivo")
                         </span>
                     </div>
                 </div>
             </div>
+
         }
     </div>
 </div>

@@ -4,14 +4,79 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+.aviso-card {
+    border-radius: 1.2rem !important;
+    box-shadow: 0 6px 32px #b9b6ec29, 0 2px 12px #ffb6b933;
+    border: 2.5px solid #f3e0ea !important;
+    transition: transform .13s, box-shadow .14s;
+    background: #fffdfd;
+    overflow: hidden;
+    position: relative;
+}
+.aviso-card:hover {
+    transform: translateY(-9px) scale(1.035);
+    box-shadow: 0 14px 40px #ffb6b975;
+    border-color: #ffb6b9 !important;
+}
+.aviso-card .card-title {
+    color: #224abe;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    margin-bottom: .7rem;
+    display: flex;
+    align-items: center;
+}
+.aviso-card .card-title i {
+    color: #ff7b9b;
+    font-size: 1.6rem;
+    margin-right: 0.53rem;
+    filter: drop-shadow(0 3px 8px #ffb6b950);
+}
+.aviso-card .card-text {
+    color: #3c2a2a;
+    font-size: 1.04rem;
+    margin-bottom: 0;
+}
+.aviso-card .card-footer {
+    background: linear-gradient(90deg, #f6e6f3 40%, #ffe3ef 100%);
+    border-top: none;
+    font-size: 0.98rem;
+    padding: 0.65rem 1.1rem;
+}
+.aviso-card .badge-success {
+    background: linear-gradient(90deg, #3dd598 60%, #92f2c3 100%);
+    color: #205f37;
+    font-weight: 600;
+    border-radius: 1rem;
+    padding: 0.3rem 0.86rem;
+    font-size: 0.98rem;
+    box-shadow: 0 2px 9px #a0ffc433;
+}
+.aviso-card .badge-secondary {
+    background: #e7e7e7;
+    color: #888;
+    font-weight: 600;
+    border-radius: 1rem;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.98rem;
+}
+@@media (max-width: 767px) {
+    .aviso-card { font-size: 1.02rem; }
+    .aviso-card .card-title { font-size: 1.09rem; }
+}
+</style>
+
+
 <div class="container">
     <div class="row">
         @foreach (var aviso in Model)
         {
             <div class="col-md-4 mb-4">
-                <div class="card shadow-sm h-100 border-left-primary">
+                <div class="card aviso-card shadow-sm h-100">
                     <div class="card-body">
-                        <h5 class="card-title text-primary">
+                        <h5 class="card-title">
                             <i class="fas fa-bullhorn"></i> @aviso.Titulo
                         </h5>
                         <p class="card-text">@aviso.Descripcion</p>

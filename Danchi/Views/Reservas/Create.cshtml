@@ -1,68 +1,125 @@
 ﻿@model Danchi.Models.Reserva
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Nueva Reserva";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Reserva</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Zona, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Zona, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Zona, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaReserva, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaReserva, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaReserva, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HoraInicio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HoraInicio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HoraInicio, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HoraFin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HoraFin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HoraFin, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NumInvitados, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NumInvitados, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NumInvitados, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+<style>
+.nueva-reserva-container {
+    max-width: 600px;
+    margin: 2.7rem auto 0 auto;
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 8px 32px #ffb6b933, 0 2px 12px #ae3b6222;
+    padding: 2.7rem 2.3rem 2.1rem 2.3rem;
+    position: relative;
+    z-index: 2;
 }
+.nueva-reserva-title {
+    font-weight: 800;
+    font-size: 2.1rem;
+    color: #7c7474;
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+    text-shadow: 0 2px 10px #ffd3dc2e;
+}
+.nueva-reserva-label {
+    font-weight: 600;
+    color: #ae3b62;
+    margin-bottom: 0.18rem;
+    font-size: 1.04rem;
+}
+.nueva-reserva-input,
+.nueva-reserva-input[type="date"],
+.nueva-reserva-input[type="time"] {
+    width: 100%;
+    border-radius: 1rem;
+    border: 1.5px solid #ffb6b9;
+    background: #f9f8f8;
+    font-size: 1.07rem;
+    padding: 0.82rem 1.15rem;
+    margin-bottom: 1.18rem;
+    color: #7c7474;
+    transition: border-color .2s, background .2s;
+}
+.nueva-reserva-input:focus {
+    border-color: #ae3b62;
+    background: #fff;
+    outline: none;
+}
+.btn-guardar-reserva {
+    background: linear-gradient(45deg, #ff7b9b 60%, #ffb6b9 100%);
+    color: #fff;
+    font-weight: 700;
+    padding: 0.9rem 2.4rem;
+    border-radius: 1.1rem;
+    border: none;
+    font-size: 1.11rem;
+    box-shadow: 0 2px 9px #ffb6b933;
+    transition: background 0.18s, box-shadow 0.18s;
+}
+.btn-guardar-reserva:hover {
+    background: linear-gradient(45deg, #ae3b62 60%, #ffb6b9 100%);
+    color: #fff;
+}
+.back-link {
+    color: #ae3b62;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 1.3rem;
+    display: inline-block;
+    transition: color .18s;
+}
+.back-link:hover {
+    color: #ff7b9b;
+    text-decoration: underline;
+}
+@@media (max-width: 700px) {
+    .nueva-reserva-container { padding: 1.4rem 0.5rem; }
+    .nueva-reserva-title { font-size: 1.3rem; }
+}
+</style>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="nueva-reserva-container">
+    <div class="nueva-reserva-title">Nueva Reserva</div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="nueva-reserva-label" for="Zona">Zona</label>
+            @Html.TextBoxFor(m => m.Zona, new { @class = "nueva-reserva-input", placeholder = "Ej: Salón Social", required = "required" })
+            @Html.ValidationMessageFor(model => model.Zona, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label class="nueva-reserva-label" for="FechaReserva">Fecha de Reserva</label>
+            @Html.TextBoxFor(m => m.FechaReserva, "{0:yyyy-MM-dd}", new { @class = "nueva-reserva-input", type = "date", required = "required" })
+            @Html.ValidationMessageFor(model => model.FechaReserva, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label class="nueva-reserva-label" for="HoraInicio">Hora de Inicio</label>
+            @Html.TextBoxFor(m => m.HoraInicio, new { @class = "nueva-reserva-input", type = "time", required = "required" })
+            @Html.ValidationMessageFor(model => model.HoraInicio, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label class="nueva-reserva-label" for="HoraFin">Hora de Finalización</label>
+            @Html.TextBoxFor(m => m.HoraFin, new { @class = "nueva-reserva-input", type = "time", required = "required" })
+            @Html.ValidationMessageFor(model => model.HoraFin, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label class="nueva-reserva-label" for="NumInvitados">Número de Invitados</label>
+            @Html.TextBoxFor(m => m.NumInvitados, new { @class = "nueva-reserva-input", type = "number", min = "1", placeholder = "Ej: 10", required = "required" })
+            @Html.ValidationMessageFor(model => model.NumInvitados, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn-guardar-reserva"><i class="fas fa-save"></i> Guardar Reserva</button>
+        </div>
+    }
+    <div class="text-center">
+        <a href="@Url.Action("Index", "Reservas")" class="back-link"><i class="fas fa-arrow-left"></i> Volver a la lista</a>
+    </div>
 </div>

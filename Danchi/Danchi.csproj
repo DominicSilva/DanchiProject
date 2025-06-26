@@ -237,8 +237,8 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\images\danchi-logo.png" />
+    <Content Include="Content\images\fondo_flor.jpg" />
     <Content Include="Content\images\inicio-background.jpg" />
-    <Content Include="Content\images\login-logo.png.jpg" />
     <Content Include="Content\images\logo.jpg" />
     <Content Include="Content\SBAdmin2\css\sb-admin-2.css" />
     <Content Include="Content\SBAdmin2\css\sb-admin-2.min.css" />
