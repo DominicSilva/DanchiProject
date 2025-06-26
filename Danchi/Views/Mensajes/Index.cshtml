@@ -1,6 +1,6 @@
 ﻿@model Danchi.Models.BandejaViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Bandeja de Mensajes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,107 +17,195 @@
     </script>
 }
 
-<h2>Bandeja de Mensajes</h2>
+<style>
+/* Contenedor principal efecto glass */
+.bandeja-chat-container {
+    max-width: 830px;
+    margin: 2.8rem auto 0 auto;
+    background: rgba(255,255,255, 0.93);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 40px 0 #ffb6b944, 0 3px 22px #b8b8b838;
+    border: 2.2px solid #ffb6b9;
+    padding: 2.1rem 2.1rem 1.1rem 2.1rem;
+    position: relative;
+    z-index: 2;
+}
+.bandeja-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .7rem;
+}
+.bandeja-header-title {
+    font-size: 1.58rem;
+    font-weight: 800;
+    color: #7c7474;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    text-shadow: 0 3px 10px #ffe3ef33;
+}
+.btn-nuevo-mensaje {
+    background: linear-gradient(45deg, #1de9b6 60%, #ffb6b9 100%);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 1.3rem;
+    padding: 0.6rem 1.3rem;
+    border: none;
+    font-size: 1.01rem;
+    box-shadow: 0 2px 10px #1de9b633;
+    transition: background 0.18s, box-shadow 0.18s;
+}
+.btn-nuevo-mensaje i { margin-right: 5px; }
+.btn-nuevo-mensaje:hover {
+    background: linear-gradient(45deg, #ae3b62 80%, #ffb6b9 100%);
+    color: #fff;
+}
 
-<div class="mb-3">
-    <a href="@Url.Action("Create", "Mensajes")" class="btn btn-success">
-        <i class="fas fa-paper-plane"></i> Nuevo Mensaje
-    </a>
-</div>
+.tabs-chat {
+    display: flex;
+    border-bottom: 1.8px solid #ffd3dc;
+    margin-bottom: 1.1rem;
+    gap: .25rem;
+}
+.tabs-chat button {
+    background: none;
+    border: none;
+    font-weight: 600;
+    color: #7c7474;
+    padding: 0.60rem 1.9rem 0.60rem 1.9rem;
+    border-radius: 1.1rem 1.1rem 0 0;
+    font-size: 1.11rem;
+    outline: none;
+    transition: background 0.22s, color 0.18s;
+    cursor: pointer;
+}
+.tabs-chat button.active,
+.tabs-chat button:focus {
+    background: #ffd3dc;
+    color: #ae3b62;
+    font-weight: 800;
+    box-shadow: 0 2px 10px #ffb6b933;
+}
 
-<ul class="nav nav-tabs" id="mensajeTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="recibidos-tab" data-bs-toggle="tab" data-bs-target="#recibidos" type="button" role="tab">
-            Recibidos
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="enviados-tab" data-bs-toggle="tab" data-bs-target="#enviados" type="button" role="tab">
-            Enviados
-        </button>
-    </li>
-</ul>
+.chat-messages {
+    min-height: 200px;
+    padding: 1.2rem 0 .5rem 0;
+}
+.chat-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0.9rem;
+}
+.message-sent {
+    align-items: flex-end;
+}
+.bubble {
+    background: linear-gradient(90deg, #ffd3dc 40%, #ffb6b9 100%);
+    color: #7c7474;
+    font-size: 1.08rem;
+    border-radius: 1.1rem 1.1rem 1.1rem 0.3rem;
+    padding: 0.8rem 1.3rem;
+    box-shadow: 0 2px 6px #ffd3dc33;
+    max-width: 92%;
+    margin-bottom: 0.22rem;
+    font-weight: 500;
+}
+.message-sent .bubble {
+    background: linear-gradient(90deg, #ede4e4 30%, #ffb6b9 100%);
+    color: #ae3b62;
+    border-radius: 1.1rem 1.1rem 0.3rem 1.1rem;
+    align-self: flex-end;
+}
+.bubble-time {
+    color: #a49595;
+    font-size: 0.98rem;
+    margin-left: .5rem;
+    margin-bottom: 0.7rem;
+}
+.message-sent .bubble-time {
+    margin-right: .5rem;
+    margin-left: 0;
+    align-self: flex-end;
+}
+.chat-empty {
+    color: #c7bcbc;
+    font-size: 1.07rem;
+    text-align: center;
+    margin-top: 1.8rem;
+}
+@@media (max-width: 900px) {
+    .bandeja-chat-container { padding: 1.1rem 0.4rem; }
+    .bandeja-header-title { font-size: 1.17rem;}
+    .bubble { font-size: 0.99rem;}
+}
+</style>
 
-<div class="tab-content mt-3" id="mensajeTabsContent">
+<div class="bandeja-chat-container">
+    <div class="bandeja-header-row">
+        <span class="bandeja-header-title">
+            <i class="fas fa-comments"></i>
+            Bandeja de Mensajes
+        </span>
+        <a href="@Url.Action("Create", "Mensajes")" class="btn-nuevo-mensaje">
+            <i class="fas fa-paper-plane"></i> Nuevo Mensaje
+        </a>
+    </div>
+
+    <div class="tabs-chat">
+        <button type="button" id="tabbtn-recibidos" class="active" onclick="showTabChat('recibidos')">Recibidos</button>
+        <button type="button" id="tabbtn-enviados" onclick="showTabChat('enviados')">Enviados</button>
+    </div>
 
     <!-- Recibidos -->
-    <div class="tab-pane fade show active" id="recibidos" role="tabpanel">
+    <div id="tab-recibidos" class="chat-messages">
         @if (Model.Recibidos != null && Model.Recibidos.Any())
         {
-            <table class="table table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>De</th>
-                        <th>Asunto</th>
-                        <th>Fecha</th>
-                        <th>Leído</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var msg in Model.Recibidos)
-                    {
-                        <tr>
-                            <td>@(msg.Emisor.Nombres + ' ' + msg.Emisor.Apellidos) </td>
-                            <td>@msg.Asunto</td>
-                            <td>@msg.FechaEnvio.ToString("dd/MM/yyyy")</td>
-                            <td>
-                                @if (msg.Leido)
-                                {
-                                    <span class="text-success"><i class="fas fa-check-circle"></i> Leído</span>
-                                }
-                                else
-                                {
-                                    <span class="text-muted"><i class="fas fa-envelope"></i> No leído</span>
-                                }
-                            </td>
-                            <td>
-                                @Html.ActionLink("Ver", "Details", new { id = msg.IdMensaje }, new { @class = "btn btn-sm btn-primary me-2" })
-                                @Html.ActionLink("Responder", "Reply", new { id = msg.IdMensaje }, new { @class = "btn btn-sm btn-info" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            foreach (var m in Model.Recibidos)
+            {
+                <div class="chat-message message-received">
+                    <div class="bubble">
+                        <b>@m.Emisor.Nombres:</b> @m.Descripcion
+                    </div>
+                    <div class="bubble-time">@m.FechaEnvio.ToString("dd/MM/yyyy HH:mm")</div>
+                </div>
+            }
         }
         else
         {
-            <div class="alert alert-info">No tienes mensajes recibidos.</div>
+            <div class="chat-empty">No tienes mensajes recibidos.</div>
         }
     </div>
 
     <!-- Enviados -->
-    <div class="tab-pane fade" id="enviados" role="tabpanel">
+    <div id="tab-enviados" class="chat-messages" style="display:none;">
         @if (Model.Enviados != null && Model.Enviados.Any())
         {
-            <table class="table table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>Para</th>
-                        <th>Asunto</th>
-                        <th>Fecha</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var msg in Model.Enviados)
-                    {
-                        <tr>
-                            <td>@(msg.Receptor.Nombres + ' ' + msg.Receptor.Apellidos) </td>
-                            <td>@msg.Asunto</td>
-                            <td>@msg.FechaEnvio.ToString("dd/MM/yyyy")</td>
-                            <td>
-                                @Html.ActionLink("Ver", "Details", new { id = msg.IdMensaje }, new { @class = "btn btn-sm btn-secondary" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            foreach (var m in Model.Enviados)
+            {
+                <div class="chat-message message-sent">
+                    <div class="bubble">
+                        <b>Tú:</b> @m.Descripcion
+                    </div>
+                    <div class="bubble-time">@m.FechaEnvio.ToString("dd/MM/yyyy HH:mm")</div>
+                </div>
+            }
         }
         else
         {
-            <div class="alert alert-info">No has enviado mensajes.</div>
+            <div class="chat-empty">No tienes mensajes enviados.</div>
         }
     </div>
 </div>
 
+<script>
+    function showTabChat(tab) {
+        document.getElementById('tab-recibidos').style.display = (tab === 'recibidos') ? 'block' : 'none';
+        document.getElementById('tab-enviados').style.display = (tab === 'enviados') ? 'block' : 'none';
+        document.getElementById('tabbtn-recibidos').classList.remove('active');
+        document.getElementById('tabbtn-enviados').classList.remove('active');
+        document.getElementById('tabbtn-' + tab).classList.add('active');
+    }
+</script>

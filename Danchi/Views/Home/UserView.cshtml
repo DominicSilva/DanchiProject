@@ -1,25 +1,137 @@
-﻿
-@model Danchi.Models.UsuarioDashboardViewModel
+﻿@model Danchi.Models.UsuarioDashboardViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Bienvenido";
 }
 
+<!-- ESTILO EN LÍNEA SOLO PARA ESTE DASHBOARD -->
+<style>
+
+    .dashboard-hero {
+        background: linear-gradient(90deg, #f7f9fe 70%, #ffe3ef 120%);
+        border-radius: 1.5rem;
+        margin-bottom: 1.4rem;
+        padding: 2.7rem 2.2rem 2.2rem 2.2rem;
+        box-shadow: 0 4px 24px #c09ae61c;
+        border: 1.5px solid #f7d2ec;
+        position: relative;
+        overflow: hidden;
+    }
+        .dashboard-hero h2 {
+            font-weight: 700;
+            font-size: 2.4rem;
+            color: #e18f8f;
+            letter-spacing: 0.02em;
+        }
+    .dashboard-hero p {
+        font-size: 1.14rem;
+        color: #836e6e;
+    }
+    .dashboard-hero::after {
+        content: "";
+        position: absolute;
+        right: -40px;
+        top: -30px;
+        width: 130px;
+        height: 130px;
+        background: url('/Content/images/logo.jpg') no-repeat center center/contain;
+        opacity: 0.12;
+        z-index: 0;
+    }
+    .dashboard-message .card-header {
+        background: linear-gradient(90deg, #7c7474 75%, #ffb6b9 120%) !important;
+        border-radius: 1.1rem 1.1rem 0 0;
+        font-size: 1.08rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        border: none;
+    }
+    .dashboard-message .card {
+        border-radius: 1.1rem;
+        box-shadow: 0 3px 20px #d4c9ed18;
+        border: none;
+    }
+    .dashboard-message .btn-outline-primary {
+        border-radius: 0.7rem;
+        border-width: 2px;
+        color: #224abe;
+        font-weight: 600;
+        transition: background .18s;
+    }
+    .dashboard-message .btn-outline-primary:hover {
+        background: #224abe;
+        color: #fff;
+    }
+    /* Tarjetas rápidas modernas */
+    .quick-access .card {
+        border-radius: 1.3rem;
+        box-shadow: 0 8px 30px #ff7b9b19, 0 2px 12px #224abe19;
+        border: none;
+        transition: transform 0.13s, box-shadow 0.15s;
+        background: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+    .quick-access .card:hover {
+        transform: translateY(-7px) scale(1.03);
+        box-shadow: 0 16px 44px #fca3d26c;
+    }
+    .quick-access .card-body {
+        padding-top: 2.3rem;
+        padding-bottom: 2.3rem;
+    }
+    .quick-access i.fa-2x {
+        font-size: 2.6rem !important;
+        margin-bottom: 0.7rem;
+        filter: drop-shadow(0 3px 14px #ffb6b977);
+    }
+    /* Colores de iconos acorde a login */
+    .quick-access .fa-calendar-check { color: #224abe; }
+    .quick-access .fa-bullhorn { color: #ffb347; }
+    .quick-access .fa-calendar-alt { color: #1bc9d7; }
+    .quick-access .btn-primary {
+        background: linear-gradient(45deg, #224abe 70%, #4e73df 120%);
+        border: none;
+        font-weight: 600;
+        border-radius: 0.8rem;
+    }
+    .quick-access .btn-warning {
+        background: linear-gradient(45deg, #ff7b9b 70%, #ffb6b9 120%);
+        border: none;
+        font-weight: 600;
+        border-radius: 0.8rem;
+        color: #fff !important;
+    }
+    .quick-access .btn-info {
+        background: linear-gradient(45deg, #47b7f4 70%, #9cecfb 120%);
+        border: none;
+        font-weight: 600;
+        border-radius: 0.8rem;
+        color: #fff !important;
+    }
+    @@media (max-width: 900px) {
+        .quick-access .card-body {
+            padding-top: 1.3rem;
+            padding-bottom: 1.3rem;
+        }
+    }
+</style>
+
 <div class="container-fluid">
     <div class="row mt-4">
         <div class="col-md-12 mb-4">
-            <div class="jumbotron bg-light shadow p-4">
-                <h2 class="display-6">Hola, @Model.NombreCompleto</h2>
-                <p class="lead">Bienvenido al sistema. Aquí puedes ver tus mensajes más recientes y acceder rápidamente a funcionalidades importantes.</p>
+            <div class="dashboard-hero">
+                <h2>Hola, @Model.NombreCompleto</h2>
+                <p>Bienvenido al sistema. Aquí puedes ver tus mensajes más recientes y acceder rápidamente a funcionalidades importantes.</p>
             </div>
         </div>
     </div>
 
     <!-- Mensajes Recientes -->
-    <div class="row">
+    <div class="row dashboard-message">
         <div class="col-md-12">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+            <div class="card">
+                <div class="card-header text-white">
                     <i class="fas fa-envelope"></i> Mensajes Recientes No Leídos
                 </div>
                 <div class="card-body">
@@ -48,29 +160,29 @@
     </div>
 
     <!-- Accesos rápidos -->
-    <div class="row mt-4">
+    <div class="row mt-4 quick-access">
         <div class="col-md-4 mb-3">
-            <div class="card shadow h-100">
+            <div class="card h-100">
                 <div class="card-body text-center">
-                    <i class="fas fa-calendar-check fa-2x text-primary mb-2"></i>
+                    <i class="fas fa-calendar-check fa-2x mb-2"></i>
                     <h5 class="card-title">Mis Reservas</h5>
                     <a href="@Url.Action("Index", "Reservas")" class="btn btn-primary btn-sm mt-2">Ver Reservas</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card shadow h-100">
+            <div class="card h-100">
                 <div class="card-body text-center">
-                    <i class="fas fa-bullhorn fa-2x text-warning mb-2"></i>
+                    <i class="fas fa-bullhorn fa-2x mb-2"></i>
                     <h5 class="card-title">Avisos</h5>
                     <a href="@Url.Action("AvisoView", "Avisos")" class="btn btn-warning btn-sm mt-2 text-white">Ver Avisos</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card shadow h-100">
+            <div class="card h-100">
                 <div class="card-body text-center">
-                    <i class="fas fa-calendar-alt fa-2x text-info mb-2"></i>
+                    <i class="fas fa-calendar-alt fa-2x mb-2"></i>
                     <h5 class="card-title">Eventos</h5>
                     <a href="@Url.Action("EventoView", "Eventos")" class="btn btn-info btn-sm mt-2 text-white">Ver Eventos</a>
                 </div>

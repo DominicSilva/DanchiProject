@@ -1,47 +1,146 @@
 ﻿@model Danchi.Models.Mensaje
 
 @{
-    ViewBag.Title = "Crear Mensaje";
+    ViewBag.Title = "Enviar Mensaje";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    body {
+        background: #f7f8fa !important;
+    }
 
-<h2>Enviar Mensaje</h2>
+    .form-mensaje-chat {
+        max-width: 650px;
+        margin: 2.8rem auto 0 auto;
+        background: rgba(255,255,255, 0.88); /* Un poco translúcido */
+        border-radius: 1.25rem;
+        /* Glassmorphism + sombra fuerte y borde */
+        box-shadow: 0 8px 40px 0 #b26b8d44, 0 3px 22px #b8b8b838, 0 0 0 5px #ffd3dc22;
+        border: 2.2px solid #ffb6b9;
+        backdrop-filter: blur(7px);
+        padding: 2.5rem 2.5rem 2.1rem 2.5rem;
+        position: relative;
+        z-index: 2;
+        /* Pequeño glow rosado */
+    }
 
-@using (Html.BeginForm("Create", "Mensajes", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <div class="form-group">
-        @Html.LabelFor(model => model.IdReceptor)
-        <div class="col-md-10">
-            @Html.DropDownList("IdReceptor", null, "Seleccione un receptor", new { @class = "form-control" })
+        .form-mensaje-chat::before {
+            /* Suave resplandor rosado/glass detrás */
+            content: "";
+            position: absolute;
+            inset: -25px;
+            background: radial-gradient(ellipse at top left, #ffb6b955 45%, #fff0 100%);
+            filter: blur(10px);
+            z-index: -1;
+            border-radius: 1.7rem;
+        }
+
+        .form-mensaje-chat h2 {
+            color: #7c7474;
+            font-size: 2.1rem;
+            font-weight: 800;
+            margin-bottom: 2.1rem;
+            letter-spacing: 0.01em;
+            text-shadow: 0 3px 10px #ffe3ef33;
+        }
+
+    .form-label {
+        font-weight: 600;
+        color: #ae3b62;
+        margin-bottom: 0.2rem;
+        letter-spacing: 0.01em;
+    }
+
+    .form-control, select, textarea {
+        border-radius: 1.07rem !important;
+        border: 1.8px solid #ead8e4 !important;
+        font-size: 1.08rem;
+        padding: 0.98rem 1.25rem !important;
+        background: #f9f8f8 !important;
+        margin-bottom: 1.3rem;
+        color: #7c7474;
+        box-shadow: 0 2px 8px #ffb6b920;
+        transition: border 0.18s, box-shadow 0.18s;
+    }
+
+        .form-control:focus, select:focus, textarea:focus {
+            border-color: #ffb6b9 !important;
+            background: #fff !important;
+            box-shadow: 0 2px 12px #ffb6b938;
+        }
+
+    .btn-enviar {
+        background: linear-gradient(45deg, #ff7b9b 60%, #ffb6b9 100%);
+        color: #fff;
+        font-weight: 700;
+        padding: 0.78rem 2.5rem;
+        border-radius: 1.17rem;
+        border: none;
+        font-size: 1.13rem;
+        box-shadow: 0 2px 14px #ffb6b933, 0 2px 8px #b26b8d20;
+        transition: background 0.2s, box-shadow 0.2s;
+    }
+
+        .btn-enviar:hover {
+            background: linear-gradient(45deg, #ae3b62 60%, #ffb6b9 100%);
+            color: #fff;
+            box-shadow: 0 2px 22px #ae3b623a;
+        }
+
+    .custom-file-label {
+        color: #ae3b62;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        font-size: 1.02rem;
+    }
+
+    .back-link {
+        color: #ae3b62;
+        font-weight: 600;
+        text-decoration: none;
+        margin-top: 1.5rem;
+        display: inline-block;
+    }
+
+        .back-link:hover {
+            color: #ff7b9b;
+            text-decoration: underline;
+        }
+
+    @@media (max-width: 700px) {
+        .form-mensaje-chat {
+            padding: 1.4rem 0.4rem;
+        }
+    }
+</style>
+
+
+<div class="form-mensaje-chat">
+    <h2>Enviar Mensaje</h2>
+    @using (Html.BeginForm("Create", "Mensajes", FormMethod.Post, new { enctype = "multipart/form-data", @autocomplete = "off" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label class="form-label" for="IdReceptor">Para</label>
+            @Html.DropDownListFor(m => m.IdReceptor, (SelectList)ViewBag.IdReceptor, "Seleccione un receptor", new { @class = "form-control", required = "required" })
             @Html.ValidationMessageFor(model => model.IdReceptor, "", new { @class = "text-danger" })
         </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Asunto)
-        @Html.TextBoxFor(model => model.Asunto, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Descripcion)
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = 5 })
+        <div class="form-group">
+            <label class="form-label" for="Asunto">Asunto</label>
+            @Html.TextBoxFor(m => m.Asunto, new { @class = "form-control", placeholder = "Escribe el asunto...", required = "required" })
+            @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="Descripcion">Mensaje</label>
+            @Html.TextAreaFor(m => m.Descripcion, 5, 50, new { @class = "form-control", placeholder = "Escribe tu mensaje...", required = "required" })
             @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
         </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ArchivoAdjunto, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="archivo" class="form-control" accept=".pdf,application/pdf" />
+        <div class="form-group">
+            <!-- SOLO EL INPUT, SIN LABEL -->
+            <input type="file" name="archivo" id="archivo" class="form-control" />
         </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Enviar</button>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+        <button type="submit" class="btn-enviar"><i class="fas fa-paper-plane"></i> Enviar</button>
+    }
+    <br />
+    <a href="@Url.Action("Index", "Mensajes")" class="back-link"><i class="fas fa-arrow-left"></i> Volver a la bandeja</a>
 </div>
