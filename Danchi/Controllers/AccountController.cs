@@ -51,11 +51,11 @@ namespace Danchi.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(Login model)
+        public ActionResult Login(Login model)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Login", "Account");
+                return View(model); // Si hay error de validación, vuelve a mostrar la vista.
             }
 
             Usuario usuario = new Usuario();
@@ -65,23 +65,24 @@ namespace Danchi.Controllers
                 case AuthResults.Success:
                     CookieUpdate(usuario);
                     if (SessionHelper.Rol == "Administrador")
-                    {
-                        return Redirect(Url.Action("Index", "Home"));
-                    }
+                        return RedirectToAction("Index", "Home");
                     else
-                    {
-                        return Redirect(Url.Action("UserView", "Home"));
-                    }
+                        return RedirectToAction("UserView", "Home");
+
                 case AuthResults.PasswordNotMatch:
-                    TempData["AlertMessage"] = "La Contrasena es incorrecta.";
-                    return RedirectToAction("Login", "Account");
+                    ModelState.AddModelError("", "La contraseña es incorrecta.");
+                    return View(model);
+
                 case AuthResults.NotExists:
-                    TempData["AlertMessage"] = "El usuario no existe.";
-                    return RedirectToAction("Login", "Account");
+                    ModelState.AddModelError("", "El usuario no existe.");
+                    return View(model);
+
                 default:
-                    return RedirectToAction("Login", "Account");
+                    ModelState.AddModelError("", "Error de autenticación.");
+                    return View(model);
             }
         }
+
 
         private void CookieUpdate(Usuario usuario)
         {

@@ -1,136 +1,183 @@
 ﻿@model Danchi.Models.Mensaje
 
 @{
-    ViewBag.Title = "Detalle del Mensaje";
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
-.msg-container {
-    max-width: 900px;
-    margin: 2.5rem auto;
-    background: #fff;
-    border-radius: 1.3rem;
-    box-shadow: 0 4px 24px #ebb3b370, 0 1.5px 12px #f8b6b938;
-    padding: 2.2rem 2rem 2rem 2rem;
-}
-.msg-title {
-    color: #8a6d6d;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.1rem;
-    text-align: center;
-}
-.msg-info {
-    font-size: 1.06rem;
-    margin-bottom: 1.3rem;
-}
-.msg-block {
-    background: #f9f8f8;
-    border-radius: 1rem;
-    padding: 1.2rem 1.3rem;
-    margin-bottom: 1.1rem;
-    box-shadow: 0 1.5px 8px #ffb6b920;
-}
-.msg-label { font-weight: 600; color: #ae3b62; }
-.msg-msg {
-    background: #fff;
-    border: 1.5px solid #ead8e4;
-    border-radius: 1rem;
-    padding: 0.8rem 1rem;
-    font-size: 1.04rem;
-    color: #7c7474;
-    margin-bottom: 1rem;
-    min-height: 50px;
-}
-.msg-respuesta-item {
-    background: #ffe3ea;
-    border-radius: .7rem;
-    padding: 0.9rem 1rem;
-    margin-bottom: .8rem;
-    box-shadow: 0 1.5px 8px #ffb6b910;
-}
-.msg-respuesta-item strong { color: #ae3b62; }
-.btn-rosa {
-    background: linear-gradient(45deg, #ff7b9b 60%, #ebb3b3 100%);
-    color: #fff !important;
-    font-weight: 700;
-    border-radius: 1.1rem;
-    border: none;
-    padding: 0.6rem 1.7rem;
-    font-size: 1.05rem;
-    box-shadow: 0 1.5px 10px #ffb6b933;
-    transition: background 0.2s;
-    margin-right: .7rem;
-}
-.btn-rosa:hover {
-    background: linear-gradient(45deg, #ce466d 60%, #ebb3b3 100%);
-    color: #fff !important;
-}
-@@media (max-width: 800px) {
-    .msg-container { padding: 1rem 0.4rem; }
-    .msg-title { font-size: 1.12rem; }
-}
+    .detalle-card {
+        max-width: 600px;
+        margin: 2.8rem auto;
+        background: #fff;
+        border-radius: 1.3rem;
+        box-shadow: 0 4px 24px #ebb3b370, 0 1.5px 12px #f8b6b938;
+        padding: 2.1rem 2rem 2rem 2rem;
+    }
+
+    .detalle-titulo {
+        text-align: center;
+        color: #ae3b62;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2.1rem;
+    }
+
+    .detalle-info h5, .detalle-info p {
+        margin-bottom: .6rem;
+    }
+
+    .detalle-info h5 {
+        font-size: 1.13rem;
+        font-weight: 600;
+        color: #ae3b62;
+    }
+
+    .detalle-info p {
+        color: #775a5a;
+        font-size: 1.05rem;
+    }
+
+    .detalle-adjunto {
+        margin-bottom: 1.1rem;
+    }
+
+    .btn-adjunto {
+        background: linear-gradient(45deg, #ff7b9b 60%, #ebb3b3 100%);
+        color: #fff !important;
+        font-weight: 600;
+        border-radius: 1.1rem;
+        border: none;
+        padding: 0.45rem 1.3rem;
+        font-size: 1rem;
+        box-shadow: 0 1.5px 10px #ffb6b933;
+        margin-left: 0.7rem;
+        transition: background 0.2s;
+    }
+
+        .btn-adjunto:hover {
+            background: linear-gradient(45deg, #ce466d 60%, #ebb3b3 100%);
+            color: #fff !important;
+        }
+
+    .detalle-respuestas-label {
+        margin-top: 1.7rem;
+        font-weight: 700;
+        color: #ae3b62;
+        font-size: 1.11rem;
+    }
+
+    .detalle-respuesta-block {
+        background: #ffe3ea;
+        border-radius: .7rem;
+        padding: 0.9rem 1.1rem;
+        margin-bottom: .9rem;
+        box-shadow: 0 1.5px 8px #ffb6b910;
+    }
+
+        .detalle-respuesta-block strong {
+            color: #ae3b62;
+        }
+
+    .form-group textarea {
+        border-radius: 1rem !important;
+        border: 1.5px solid #ead8e4 !important;
+        font-size: 1.06rem;
+        padding: 0.8rem 1rem !important;
+        background: #f9f8f8 !important;
+        color: #7c7474;
+    }
+
+    .btn-respuesta {
+        background: linear-gradient(45deg, #ff7b9b 60%, #ebb3b3 100%);
+        color: #fff !important;
+        font-weight: 700;
+        border-radius: 1.1rem;
+        border: none;
+        padding: 0.65rem 2.1rem;
+        font-size: 1.07rem;
+        box-shadow: 0 1.5px 10px #ffb6b933;
+        margin-top: .7rem;
+        margin-bottom: 1.2rem;
+        transition: background 0.2s;
+    }
+
+        .btn-respuesta:hover {
+            background: linear-gradient(45deg, #ce466d 60%, #ebb3b3 100%);
+            color: #fff !important;
+        }
+
+    .volver-link {
+        color: #ae3b62;
+        font-weight: 600;
+        text-decoration: none;
+        margin-top: 1.7rem;
+        display: inline-block;
+        transition: color .2s;
+        font-size: 1.09rem;
+    }
+
+        .volver-link:hover {
+            color: #ff7b9b;
+            text-decoration: underline;
+        }
 </style>
 
-<div class="msg-container">
-    <div class="msg-title">Detalle del Mensaje</div>
-    <div class="msg-info">
-        <span class="msg-label">De:</span> @Model.Emisor.Correo<br>
-        <span class="msg-label">Para:</span> @Model.Receptor.Correo<br>
-        <span class="msg-label">Asunto:</span> @Model.Asunto<br>
-        <span class="msg-label">Fecha:</span> @Model.FechaEnvio.ToString("dd/MM/yyyy HH:mm")
-    </div>
+<div class="detalle-card">
+    <div class="detalle-titulo">Detalle del Mensaje</div>
 
-    <div class="msg-block">
-        <div class="msg-label">Mensaje:</div>
-        <div class="msg-msg">@Model.Descripcion</div>
+    <div class="detalle-info">
+        <h5><strong>De:</strong> @Model.Emisor.Correo</h5>
+        <h5><strong>Para:</strong> @Model.Receptor.Correo</h5>
+        <h5><strong>Asunto:</strong> @Model.Asunto</h5>
+        <p><strong>Fecha:</strong> @Model.FechaEnvio.ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>Mensaje:</strong><br />@Model.Descripcion</p>
+
         @if (!string.IsNullOrEmpty(Model.ArchivoAdjunto))
         {
-            <div style="margin-bottom:1rem;">
-                <span class="msg-label">Archivo adjunto:</span>
-                @Html.ActionLink("Descargar", "DescargarArchivo", new { id = Model.IdMensaje }, new { @class = "btn-rosa", style = "padding: 0.35rem 1.3rem; font-size:0.98rem;" })
+            <div class="detalle-adjunto">
+                <strong>Archivo adjunto:</strong>
+                @Html.ActionLink("Descargar", "DescargarArchivo", new { id = Model.IdMensaje }, new { @class = "btn-adjunto" })
             </div>
         }
     </div>
 
-    <div class="msg-block">
-        <div class="msg-label" style="margin-bottom:0.5rem;">Mensajes:</div>
-        @if (Model.Respuestas != null && Model.Respuestas.Any())
+    <hr />
+    <div class="detalle-respuestas-label">Mensajes:</div>
+    @if (Model.Respuestas != null && Model.Respuestas.Any())
+    {
+        foreach (var respuesta in Model.Respuestas.OrderBy(r => r.FechaEnvio))
         {
-            foreach (var respuesta in Model.Respuestas.OrderBy(r => r.FechaEnvio))
-            {
-                <div class="msg-respuesta-item">
-                    <p style="margin-bottom:0.2rem;">
-                        <strong>@respuesta.Emisor.Correo</strong>
-                        <span style="color:#888;">(@respuesta.FechaEnvio.ToString("dd/MM/yyyy HH:mm"))</span>
-                    </p>
-                    <div>@respuesta.Descripcion</div>
-                </div>
-            }
-        }
-        else
-        {
-            <div class="text-muted">Sin respuestas.</div>
-        }
-    </div>
-
-    <div class="msg-block">
-        <div class="msg-label" style="margin-bottom:0.6rem;">Responder:</div>
-        @using (Html.BeginForm("Create", "Mensajes", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.Hidden("IdReceptor", Model.IdEmisor)
-            @Html.Hidden("MensajePadreId", Model.IdMensaje)
-            @Html.Hidden("Asunto", "RE: " + Model.Asunto)
-
-            <div>
-                @Html.TextArea("Descripcion", null, new { @class = "msg-msg", rows = 4, placeholder = "Escribe tu respuesta..." })
+            <div class="detalle-respuesta-block">
+                <p>
+                    <strong>@respuesta.Emisor.Correo</strong>
+                    <span style="color:#888;">(@respuesta.FechaEnvio.ToString("dd/MM/yyyy HH:mm"))</span>
+                </p>
+                <div>@respuesta.Descripcion</div>
             </div>
-            <button type="submit" class="btn-rosa">Enviar respuesta</button>
         }
-    </div>
-    <div style="margin-top:1rem;">
-        @Html.ActionLink("← Volver a la lista", "Index", null, new { style = "color:#ae3b62; font-weight:600; text-decoration:none;" })
+    }
+    else
+    {
+        <div class="text-muted">Sin respuestas.</div>
+    }
+
+    <hr />
+    <div class="detalle-respuestas-label">Respuestas:</div>
+    @using (Html.BeginForm("Create", "Mensajes", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("IdReceptor", Model.IdEmisor)
+        @Html.Hidden("MensajePadreId", Model.IdMensaje)
+        @Html.Hidden("Asunto", "RE: " + Model.Asunto)
+
+        <div class="form-group">
+            @Html.TextArea("Descripcion", null, new { @class = "form-control", rows = 4, placeholder = "Escribe tu respuesta..." })
+        </div>
+        <button type="submit" class="btn-respuesta">Enviar respuesta</button>
+    }
+
+    <div>
+        @Html.ActionLink("← Volver a la lista", "Index", null, new { @class = "volver-link" })
     </div>
 </div>

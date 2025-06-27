@@ -9,9 +9,10 @@ namespace Danchi.Controllers
 {
     public class ErrorController : Controller
     {
-        public async Task<ActionResult> Unauthorized()
+        public ActionResult Unauthorized()
         {
             return View();
         }
+
     }
 }

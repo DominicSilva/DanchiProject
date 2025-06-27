@@ -32,7 +32,7 @@ namespace Danchi.Controllers
         }
 
         [AuthorizeRole("Administrador")]
-        public async Task<ActionResult> Create()
+        public ActionResult Create()
         {
             return View();
         }
