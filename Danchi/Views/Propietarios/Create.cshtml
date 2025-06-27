@@ -1,92 +1,134 @@
 ﻿@model Danchi.Models.Propietario
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Crear Propietario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .prop-form-container {
+        max-width: 900px;
+        margin: 2.5rem auto;
+        background: #fff;
+        border-radius: 1.3rem;
+        box-shadow: 0 4px 24px #ebb3b370, 0 1.5px 12px #f8b6b938;
+        padding: 2.7rem 2.2rem 2.4rem 2.2rem;
+    }
 
-<h2>Create</h2>
+    .prop-form-title {
+        text-align: center;
+        color: #8a6d6d;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+    }
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Propietario</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdTipoDocumento, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdTipoDocumento, new { htmlAttributes = new { @class = "form-control" } })
+    .form-group label {
+        font-weight: 600;
+        color: #ae3b62;
+        margin-bottom: 0.3rem;
+        font-size: 1.07rem;
+    }
+
+    .form-control {
+        border-radius: 1rem !important;
+        border: 1.5px solid #ead8e4 !important;
+        font-size: 1.06rem;
+        padding: 0.9rem 1.2rem !important;
+        background: #f9f8f8 !important;
+        color: #7c7474;
+    }
+
+        .form-control:focus {
+            border-color: #ffb6b9 !important;
+            background: #fff !important;
+            box-shadow: 0 2px 10px #ffb6b938;
+        }
+
+    .btn-rosa {
+        background: linear-gradient(45deg, #ff7b9b 60%, #ebb3b3 100%);
+        color: #fff !important;
+        font-weight: 700;
+        border-radius: 1.1rem;
+        border: none;
+        padding: 0.75rem 2.2rem;
+        font-size: 1.07rem;
+        box-shadow: 0 1.5px 10px #ffb6b933;
+        transition: background 0.2s;
+    }
+
+        .btn-rosa:hover {
+            background: linear-gradient(45deg, #ce466d 60%, #ebb3b3 100%);
+            color: #fff !important;
+        }
+
+    .back-link {
+        color: #ae3b62;
+        font-weight: 600;
+        text-decoration: none;
+        margin-top: 1.5rem;
+        display: inline-block;
+    }
+
+        .back-link:hover {
+            color: #ff7b9b;
+            text-decoration: underline;
+        }
+</style>
+
+<div class="prop-form-container">
+    <div class="prop-form-title">Nuevo Propietario</div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdTipoDocumento)
+                @Html.DropDownListFor(model => model.IdTipoDocumento, (IEnumerable<SelectListItem>)ViewBag.IdTipoDocumento, "-- Selecciona un tipo de documento --", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdTipoDocumento, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NumeroDocumento, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(model => model.NumeroDocumento)
                 @Html.EditorFor(model => model.NumeroDocumento, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.NumeroDocumento, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Apellidos, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Apellidos)
                 @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nombres)
                 @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Correo)
                 @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Telefono)
                 @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Celular, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Celular)
                 @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdApto, "IdApto", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdApto, "Apartamento")
                 @Html.DropDownListFor(model => model.IdApto, (IEnumerable<SelectListItem>)ViewBag.IdApto, "-- Selecciona un Apto --", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdApto, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group" style="text-align:center;">
+                <button type="submit" class="btn-rosa">Crear</button>
             </div>
         </div>
+    }
+    <div style="text-align:center;">
+        @Html.ActionLink("Volver a la lista", "Index", null, new { @class = "back-link" })
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>

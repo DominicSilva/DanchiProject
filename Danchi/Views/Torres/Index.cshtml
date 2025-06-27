@@ -2,62 +2,130 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Torres";
 }
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: @Html.Raw(HttpUtility.JavaScriptStringEncode(TempData["SuccessMessage"].ToString(), true)),
-            confirmButtonText: 'Aceptar',
-            timer: 3000
-        });
-    </script>
+<style>
+.torres-container {
+    max-width: 850px;
+    margin: 2.5rem auto;
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 6px 32px #ebb3b370, 0 2px 14px #f8b6b938;
+    padding: 2.3rem 2rem 2.5rem 2rem;
 }
 
-<!DOCTYPE html>
+.torres-title {
+    color: #8a6d6d;
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1.7rem;
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreTorre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
+.torres-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff7fa;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 10px #ebb3b333;
+}
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreTorre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaCreacion)
-                </td>
-                <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.IdTorre })
-                </td>
-                <td>
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTorre })
-                </td>
-            </tr>
-        }
+.torres-table th, .torres-table td {
+    padding: 1rem 1.1rem;
+    text-align: left;
+    font-size: 1rem;
+}
 
-    </table>
-</body>
-</html>
+.torres-table th {
+    background: #ffc6d0;
+    color: #874d5b;
+    font-weight: 700;
+    border-bottom: 2px solid #ebb3b3;
+}
+
+.torres-table tr:not(:last-child) td {
+    border-bottom: 1px solid #ffe1e7;
+}
+
+.torres-table td {
+    color: #786767;
+}
+
+.torres-btn {
+    background: linear-gradient(45deg, #ff7b9b 60%, #ebb3b3 100%);
+    color: #fff !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 0.9rem;
+    padding: 0.46rem 1.1rem;
+    font-size: 1rem;
+    transition: background 0.18s;
+    margin: 0 0.15rem;
+    display: inline-block;
+    text-decoration: none !important;
+}
+
+.torres-btn:hover {
+    background: linear-gradient(45deg, #ae3b62 70%, #ffb6b9 100%);
+    color: #fff !important;
+}
+
+.torres-btn-create {
+    margin-bottom: 1.4rem;
+    background: linear-gradient(45deg, #ebb3b3 50%, #ffb6b9 100%);
+    color: #a1435b;
+    font-weight: 700;
+    border-radius: 1rem;
+    padding: 0.54rem 1.2rem;
+    border: none;
+    transition: background 0.18s;
+    text-decoration: none;
+    font-size: 1.06rem;
+}
+
+.torres-btn-create:hover {
+    background: linear-gradient(45deg, #ffb6b9 70%, #ebb3b3 100%);
+    color: #ae3b62;
+    text-decoration: none;
+}
+
+@@media (max-width: 700px) {
+    .torres-container { padding: 1rem 0.2rem; }
+    .torres-title { font-size: 1.25rem; }
+    .torres-table th, .torres-table td { padding: 0.68rem 0.3rem; font-size: 0.95rem;}
+}
+</style>
+
+<div class="torres-container">
+    <div class="torres-title">Torres</div>
+    <a href="@Url.Action("Create", "Torres")" class="torres-btn-create"><i class="fas fa-plus"></i> Nueva Torre</a>
+    <div style="overflow-x:auto;">
+        <table class="torres-table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().NombreTorre)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().FechaCreacion)</th>
+                    <th style="text-align:center;" colspan="2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.NombreTorre</td>
+                        <td>@item.FechaCreacion.ToString("dd/MM/yyyy HH:mm tt")</td>
+                        <td style="text-align:center;">
+                            <a href="@Url.Action("Edit", "Torres", new { id = item.IdTorre })" class="torres-btn"><i class="fas fa-edit"></i> Editar</a>
+                        </td>
+                        <td style="text-align:center;">
+                            <a href="@Url.Action("Delete", "Torres", new { id = item.IdTorre })" class="torres-btn"><i class="fas fa-trash"></i> Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

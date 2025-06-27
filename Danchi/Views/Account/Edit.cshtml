@@ -1,69 +1,133 @@
 ﻿@model Danchi.Models.Usuario
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar Usuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<style>
+.user-edit-container {
+    max-width: 550px;
+    margin: 2.5rem auto;
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 36px #b9b6ec33, 0 2px 18px #7bafd633;
+    padding: 2.1rem 2.2rem 1.8rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+.user-edit-title {
+    color: #33203b;
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.01em;
+}
+.user-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.36rem;
+    margin-bottom: 0.5rem;
+}
+.user-form-label {
+    font-weight: 600;
+    color: #6a11cb;
+    font-size: 1rem;
+    margin-bottom: 0.08rem;
+    letter-spacing: 0.01em;
+}
+.user-form-control, select {
+    border-radius: 0.9rem !important;
+    border: 1.5px solid #d7def9 !important;
+    font-size: 1.09rem;
+    padding: 0.8rem 1.2rem !important;
+    background: #f9faff !important;
+    color: #333;
+    width: 100%;
+    transition: box-shadow .2s, border .2s;
+}
+.user-form-control:focus, select:focus {
+    border-color: #7bafd6 !important;
+    background: #fff !important;
+    box-shadow: 0 2px 12px #7bafd634;
+}
+.btn-actualizar-usuario {
+    background: linear-gradient(90deg, #6a11cb 20%, #2575fc 100%);
+    color: #fff;
+    font-weight: 700;
+    padding: 0.95rem 0;
+    border-radius: 1rem;
+    border: none;
+    font-size: 1.18rem;
+    box-shadow: 0 2px 10px #7bafd633;
+    width: 100%;
+    margin-top: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .7rem;
+    transition: background 0.18s;
+}
+.btn-actualizar-usuario:hover {
+    background: linear-gradient(90deg, #2575fc 60%, #6a11cb 100%);
+    color: #fff;
+}
+.back-link {
+    color: #6a11cb;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 1.2rem;
+    display: inline-block;
+}
+.back-link:hover {
+    color: #2575fc;
+    text-decoration: underline;
+}
+@@media (max-width: 700px) {
+    .user-edit-container { padding: 1.1rem 0.5rem; max-width: 97vw; }
+    .user-edit-title { font-size: 1.23rem;}
+}
+</style>
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Usuario</h4>
-        <hr />
+<div class="user-edit-container">
+    <div class="user-edit-title">Editar Usuario</div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IdUsuario)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
-            </div>
+        <div class="user-form-group">
+            @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "user-form-label" })
+            @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "user-form-control", placeholder = "Nombres..." } })
+            @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Apellidos, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
-            </div>
+        <div class="user-form-group">
+            @Html.LabelFor(model => model.Apellidos, htmlAttributes: new { @class = "user-form-label" })
+            @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "user-form-control", placeholder = "Apellidos..." } })
+            @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
-            </div>
+        <div class="user-form-group">
+            @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "user-form-label" })
+            @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "user-form-control", placeholder = "Correo..." } })
+            @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-            </div>
+        <div class="user-form-group">
+            @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "user-form-label" })
+            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "user-form-control", placeholder = "Teléfono o Celular..." } })
+            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdRol, "Rol", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.IdRol, (IEnumerable<SelectListItem>)ViewBag.Rol, "-- Selecciona un Rol --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdRol, "", new { @class = "text-danger" })
-            </div>
+        <div class="user-form-group">
+            @Html.LabelFor(model => model.IdRol, "Rol", htmlAttributes: new { @class = "user-form-label" })
+            @Html.DropDownListFor(model => model.IdRol, (IEnumerable<SelectListItem>)ViewBag.Rol, "-- Selecciona un Rol --", new { @class = "user-form-control" })
+            @Html.ValidationMessageFor(model => model.IdRol, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NuevaContrasena, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NuevaContrasena, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NuevaContrasena, "", new { @class = "text-danger" })
-            </div>
+        <div class="user-form-group">
+            @Html.LabelFor(model => model.NuevaContrasena, htmlAttributes: new { @class = "user-form-label" })
+            @Html.EditorFor(model => model.NuevaContrasena, new { htmlAttributes = new { @class = "user-form-control", placeholder = "Nueva Contraseña..." } })
+            @Html.ValidationMessageFor(model => model.NuevaContrasena, "", new { @class = "text-danger" })
         </div>
 
         @Html.HiddenFor(model => model.Contrasena)
@@ -72,15 +136,12 @@
         @Html.HiddenFor(model => model.FechaCreacion)
         @Html.HiddenFor(model => model.UsuarioCreacion)
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+        <button type="submit" class="btn-actualizar-usuario">
+            <i class="fas fa-save"></i> Guardar Cambios
+        </button>
+    }
+    <a href="@Url.Action("Index", "Usuarios")" class="back-link">
+        <i class="fas fa-arrow-left"></i> Volver a la lista
+    </a>
 </div>
 

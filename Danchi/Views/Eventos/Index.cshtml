@@ -18,80 +18,159 @@
     </script>
 }
 
-<div class="text-center">
-    <h2>Eventos</h2>
-</div>
+<style>
+.eventos-container {
+    max-width: 1150px;
+    margin: 2.7rem auto;
+    background: #fff;
+    border-radius: 1.4rem;
+    box-shadow: 0 6px 32px #ebb3b370, 0 2px 14px #f8b6b938;
+    padding: 2.5rem 1.8rem 2.2rem 1.8rem;
+}
+.eventos-title {
+    color: #8a6d6d;
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 2.2rem;
+}
+.eventos-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.6rem;
+}
+.btn-rosa {
+    background: linear-gradient(45deg, #ff7b9b 60%, #ebb3b3 100%);
+    color: #fff !important;
+    font-weight: 700;
+    border-radius: 1.1rem;
+    border: none;
+    padding: 0.6rem 1.3rem;
+    font-size: 1.04rem;
+    box-shadow: 0 1.5px 10px #ffb6b933;
+    transition: background 0.2s;
+}
+.btn-rosa:hover {
+    background: linear-gradient(45deg, #ce466d 60%, #ebb3b3 100%);
+    color: #fff !important;
+}
+.btn-exportar {
+    background: linear-gradient(45deg, #f86d75 60%, #ebb3b3 100%);
+    color: #fff !important;
+    font-weight: 700;
+    border-radius: 1.1rem;
+    border: none;
+    padding: 0.6rem 1.3rem;
+    font-size: 1.04rem;
+    box-shadow: 0 1.5px 10px #ebb3b355;
+    transition: background 0.2s;
+}
+.btn-exportar:hover {
+    background: linear-gradient(45deg, #ce466d 60%, #ebb3b3 100%);
+    color: #fff !important;
+}
+.eventos-table {
+    width: 100%;
+    border-radius: 1.1rem 1.1rem 1rem 1rem;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 2px 8px #ebb3b333;
+}
+.eventos-table thead tr {
+    background: linear-gradient(90deg, #ebb3b3 80%, #fff 100%);
+}
+.eventos-table th {
+    color: #ad7b7b;
+    font-weight: 800;
+    padding: 0.85rem 0.7rem;
+    font-size: 1.07rem;
+    border-bottom: 2px solid #ffb6b933;
+    border-top: none;
+    text-align: left;
+}
+.eventos-table td {
+    padding: 0.75rem 0.7rem;
+    font-size: 1.05rem;
+    color: #7c7474;
+    background: #fff;
+    border-bottom: 1.5px solid #f4dade;
+    vertical-align: middle;
+}
+.eventos-table tr:nth-child(even) td {
+    background: #fff6f6;
+}
+.eventos-table tbody tr:hover td {
+    background: #ffeff5;
+    transition: background 0.25s;
+}
+.eventos-table a {
+    color: #ce466d !important;
+    font-weight: 700;
+    margin-right: 0.7rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.eventos-table a:hover {
+    color: #ff7b9b !important;
+    text-decoration: underline;
+}
+@@media (max-width: 900px) {
+    .eventos-container { padding: 1.1rem 0.4rem; }
+    .eventos-title { font-size: 1.25rem;}
+}
+</style>
 
-<div class="d-flex justify-content-between mb-3">
-    <div>
-        @Html.ActionLink("Nuevo Evento", "Create", null, new { @class = "btn btn-primary" })
-    </div>
-    @if (Danchi.Utils.SessionHelper.Rol == "Administrador")
-    {
+<div class="eventos-container">
+    <div class="eventos-title">Eventos</div>
+    <div class="eventos-actions">
         <div>
-            @Html.ActionLink("Exportar a PDF", "ExportarEventosPDF", "Eventos", null, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Nuevo Evento", "Create", null, new { @class = "btn-rosa" })
         </div>
-    }
+        @if (Danchi.Utils.SessionHelper.Rol == "Administrador")
+        {
+            <div>
+                @Html.ActionLink("Exportar a PDF", "ExportarEventosPDF", "Eventos", null, new { @class = "btn-exportar" })
+            </div>
+        }
+    </div>
+
+    <table class="eventos-table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Titulo)</th>
+                <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                <th>@Html.DisplayNameFor(model => model.FechaEvento)</th>
+                <th>@Html.DisplayNameFor(model => model.HoraInicio)</th>
+                <th>@Html.DisplayNameFor(model => model.HoraFin)</th>
+                <th>@Html.DisplayNameFor(model => model.Lugar)</th>
+                <th>@Html.DisplayNameFor(model => model.Estado)</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Titulo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FechaEvento)</td>
+                    <td>@Html.DisplayFor(modelItem => item.HoraInicio)</td>
+                    <td>@Html.DisplayFor(modelItem => item.HoraFin)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Lugar)</td>
+                    <td>
+                        @(item.Estado ? "✔️" : "❌")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdEvento })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEvento })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
-
-<table class="table table-bordered table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Titulo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaEvento)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HoraInicio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HoraFin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lugar)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Estado)
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaEvento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoraInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoraFin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lugar)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.IdEvento })
-            </td>
-            <td>
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdEvento })
-            </td>
-        </tr>
-    }
-
-</table>

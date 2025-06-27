@@ -1,88 +1,126 @@
 ﻿@model Danchi.Models.Evento
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar Evento";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<style>
+.evento-edit-container {
+    max-width: 650px;
+    margin: 2.7rem auto;
+    background: #fff;
+    border-radius: 1.15rem;
+    box-shadow: 0 8px 32px #ebb3b340, 0 2px 14px #ffb6b928;
+    padding: 2.5rem 2rem 2rem 2rem;
+}
+.evento-edit-title {
+    color: #7c7474;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+.evento-edit-label {
+    font-weight: 600;
+    color: #ae3b62;
+    margin-bottom: .3rem;
+    display: block;
+    letter-spacing: 0.01em;
+}
+.evento-edit-control,
+.evento-edit-container textarea {
+    border-radius: 1.05rem !important;
+    border: 1.5px solid #ead8e4 !important;
+    font-size: 1.07rem;
+    padding: 0.9rem 1.2rem !important;
+    background: #f9f8f8 !important;
+    margin-bottom: 1.3rem;
+    color: #7c7474;
+    width: 100%;
+    box-sizing: border-box;
+}
+.evento-edit-control:focus,
+.evento-edit-container textarea:focus {
+    border-color: #ffb6b9 !important;
+    background: #fff !important;
+    box-shadow: 0 2px 10px #ffb6b938;
+}
+.btn-guardar-evento {
+    background: linear-gradient(45deg, #ff7b9b 60%, #ffb6b9 100%);
+    color: #fff;
+    font-weight: 700;
+    padding: 0.73rem 2.2rem;
+    border-radius: 1.15rem;
+    border: none;
+    font-size: 1.09rem;
+    box-shadow: 0 2px 9px #ffb6b933;
+    transition: background 0.18s, box-shadow 0.18s;
+}
+.btn-guardar-evento:hover {
+    background: linear-gradient(45deg, #ae3b62 60%, #ffb6b9 100%);
+    color: #fff;
+}
+@@media (max-width: 700px) {
+    .evento-edit-container { padding: 1.2rem 0.5rem; }
+    .evento-edit-title { font-size: 1.28rem;}
+}
+</style>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Evento</h4>
-        <hr />
+<div class="evento-edit-container">
+    <div class="evento-edit-title">Editar Evento</div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.IdEvento)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
-            </div>
+            @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "evento-edit-label" })
+            @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "evento-edit-control", placeholder = "Título del evento" } })
+            @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", rows = "5", style = "resize: none;" } })
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-            </div>
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "evento-edit-label" })
+            @Html.TextAreaFor(model => model.Descripcion, 4, 50, new { @class = "evento-edit-control", placeholder = "Descripción del evento..." })
+            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FechaEvento, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.FechaEvento, "{0:dd/MM/yyyy}", new { @class = "form-control", @placeholder = "dd/MM/yyyy" })
-                @Html.ValidationMessageFor(model => model.FechaEvento, "", new { @class = "text-danger" })
-            </div>
+            @Html.LabelFor(model => model.FechaEvento, htmlAttributes: new { @class = "evento-edit-label" })
+            @Html.TextBoxFor(model => model.FechaEvento, new { @class = "evento-edit-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.FechaEvento, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.HoraInicio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HoraInicio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HoraInicio, "", new { @class = "text-danger" })
-            </div>
+            @Html.LabelFor(model => model.HoraInicio, htmlAttributes: new { @class = "evento-edit-label" })
+            @Html.TextBoxFor(model => model.HoraInicio, new { @class = "evento-edit-control", type = "time" })
+            @Html.ValidationMessageFor(model => model.HoraInicio, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.HoraFin, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HoraFin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HoraFin, "", new { @class = "text-danger" })
-            </div>
+            @Html.LabelFor(model => model.HoraFin, htmlAttributes: new { @class = "evento-edit-label" })
+            @Html.TextBoxFor(model => model.HoraFin, new { @class = "evento-edit-control", type = "time" })
+            @Html.ValidationMessageFor(model => model.HoraFin, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Lugar, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Lugar, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Lugar, "", new { @class = "text-danger" })
-            </div>
+            @Html.LabelFor(model => model.Lugar, htmlAttributes: new { @class = "evento-edit-label" })
+            @Html.EditorFor(model => model.Lugar, new { htmlAttributes = new { @class = "evento-edit-control", placeholder = "Lugar del evento" } })
+            @Html.ValidationMessageFor(model => model.Lugar, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Estado)
-                    @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-                </div>
-            </div>
+        <div class="form-group" style="display: flex; align-items: center; gap: 0.7rem;">
+            @Html.EditorFor(model => model.Estado)
+            <label class="evento-edit-label" style="margin-bottom: 0;">@Html.DisplayNameFor(model => model.Estado)</label>
+            @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+        <button type="submit" class="btn-guardar-evento"><i class="fas fa-save"></i> Guardar</button>
+    }
+    <br />
+    <a href="@Url.Action("Index", "Eventos")" style="color:#ae3b62;font-weight:600;text-decoration:none;">
+        <i class="fas fa-arrow-left"></i> Volver a la lista
+    </a>
 </div>

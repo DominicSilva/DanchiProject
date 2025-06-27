@@ -1,49 +1,106 @@
 ﻿@model Danchi.Models.Aviso
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Eliminar Aviso";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<style>
+    .delete-aviso-container {
+        max-width: 600px;
+        margin: 2.5rem auto 0 auto;
+        background: #fff;
+        border-radius: 1.15rem;
+        box-shadow: 0 8px 32px #b9b6ec1a, 0 2px 12px #ffb6b928;
+        padding: 2.2rem 2rem 2rem 2rem;
+    }
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Aviso</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
+    .delete-title {
+        color: #7c7474;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        text-align: left;
+    }
 
+    .delete-desc {
+        color: #7c7474;
+        font-size: 1.15rem;
+        margin-bottom: 1.7rem;
+    }
+
+    .delete-dl {
+        margin-bottom: 1.7rem;
+    }
+
+        .delete-dl dt {
+            font-weight: 700;
+            color: #ae3b62;
+            margin-bottom: 0.18rem;
+            margin-top: 0.6rem;
+            font-size: 1.04rem;
+        }
+
+        .delete-dl dd {
+            margin-left: 0;
+            color: #494747;
+            margin-bottom: 0.1rem;
+        }
+
+    .btn-eliminar {
+        background: linear-gradient(45deg, #ff7b9b 60%, #ffb6b9 100%);
+        color: #fff;
+        font-weight: 700;
+        padding: 0.63rem 2.2rem;
+        border-radius: 1.15rem;
+        border: none;
+        font-size: 1.07rem;
+        box-shadow: 0 2px 9px #ffb6b933;
+        transition: background 0.18s, box-shadow 0.18s;
+        margin-right: 1.1rem;
+    }
+
+        .btn-eliminar:hover {
+            background: linear-gradient(45deg, #ae3b62 60%, #ffb6b9 100%);
+            color: #fff;
+        }
+
+    .back-link {
+        color: #ae3b62;
+        font-weight: 600;
+        text-decoration: none;
+        margin-left: 0.5rem;
+    }
+
+        .back-link:hover {
+            color: #ff7b9b;
+            text-decoration: underline;
+        }
+</style>
+
+<div class="delete-aviso-container">
+    <div class="delete-title">Eliminar Aviso</div>
+    <div class="delete-desc">
+        ¿Estás seguro que deseas eliminar este aviso?
+    </div>
+    <div style="margin-bottom:1.6rem;font-size:1.09rem;color:#888;">
+        <b>Aviso</b>
+    </div>
+    <dl class="delete-dl">
+        <dt>@Html.DisplayNameFor(model => model.Titulo)</dt>
+        <dd>@Html.DisplayFor(model => model.Titulo)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Descripcion)</dt>
+        <dd>@Html.DisplayFor(model => model.Descripcion)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Estado)</dt>
         <dd>
-            @Html.DisplayFor(model => model.Titulo)
+            @(Model.Estado ? "Activo" : "Inactivo")
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+        <button type="submit" class="btn-eliminar"><i class="fas fa-trash"></i> Eliminar</button>
+        <a href="@Url.Action("Index", "Avisos")" class="back-link"><i class="fas fa-arrow-left"></i> Cancelar</a>
     }
 </div>
