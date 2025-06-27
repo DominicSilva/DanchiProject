@@ -17,50 +17,132 @@
         });
     </script>
 }
-
-<div class="text-center">
-    <h2>Apartamentos</h2>
-</div>
-
-<div class="d-flex justify-content-between mb-3">
-    <div>
-        @Html.ActionLink("Nuevo Apartamento", "Create", null, new { @class = "btn btn-primary" })
-    </div>
-</div>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Torre.NombreTorre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NombreApto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaCreacion)
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Torre.NombreTorre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreApto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.IdApto })
-            </td>
-            <td>
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdApto })
-            </td>
-        </tr>
+<style>
+    .apto-table-container {
+        max-width: 950px;
+        margin: 2.5rem auto;
+        background: #fff;
+        border-radius: 1.2rem;
+        box-shadow: 0 6px 32px #ebb3b370, 0 2px 14px #f8b6b938;
+        padding: 2rem 2rem 2.2rem 2rem;
     }
 
-</table>
+    .apto-title {
+        text-align: center;
+        color: #8a6d6d;
+        font-size: 2.1rem;
+        font-weight: 800;
+        margin-bottom: 2rem;
+        letter-spacing: 0.01em;
+    }
+
+    .apto-table-actions {
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+
+    .btn-nuevo-apto {
+        background: linear-gradient(45deg, #ff7b9b 60%, #ebb3b3 100%);
+        color: #fff;
+        font-weight: 700;
+        border-radius: 1.1rem;
+        padding: 0.7rem 1.5rem;
+        border: none;
+        font-size: 1.05rem;
+        box-shadow: 0 2px 8px #ebb3b333;
+        margin-bottom: .8rem;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-nuevo-apto:hover {
+            background: linear-gradient(45deg, #ce466d 70%, #ebb3b3 100%);
+            color: #fff;
+            text-decoration: none;
+        }
+
+    .apto-table {
+        width: 100%;
+        background: #fff7f7;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 2px 11px #ebb3b33a;
+    }
+
+        .apto-table th, .apto-table td {
+            padding: 1rem 0.7rem;
+            text-align: left;
+            border-bottom: 1px solid #f6d6d6;
+            font-size: 1.04rem;
+        }
+
+        .apto-table th {
+            background: linear-gradient(90deg, #ffd6e0 65%, #ebb3b3 100%);
+            color: #ce466d;
+            font-weight: 800;
+            border-bottom: 2px solid #ebb3b3;
+            font-size: 1.09rem;
+        }
+
+        .apto-table tr:last-child td {
+            border-bottom: none;
+        }
+
+    .btn-action-apto {
+        border: none;
+        background: #ffe1e7;
+        color: #ce466d;
+        font-weight: 700;
+        padding: 0.4rem 1.2rem;
+        border-radius: 0.9rem;
+        font-size: 0.98rem;
+        margin-right: 0.4rem;
+        transition: background 0.17s, color 0.17s;
+        text-decoration: none;
+    }
+
+        .btn-action-apto:hover {
+            background: #ebb3b3;
+            color: #fff;
+            text-decoration: none;
+        }
+</style>
+
+<div class="apto-table-container">
+    <div class="apto-title">Apartamentos</div>
+
+    <div class="apto-table-actions">
+        <a href="@Url.Action("Create", "Aptos")" class="btn-nuevo-apto">
+            <i class="fas fa-plus"></i> Nuevo Apartamento
+        </a>
+    </div>
+
+    <table class="apto-table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Torre.NombreTorre)</th>
+            <th>@Html.DisplayNameFor(model => model.NombreApto)</th>
+            <th>@Html.DisplayNameFor(model => model.FechaCreacion)</th>
+            <th colspan="2" style="text-align:center">Acciones</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Torre.NombreTorre)</td>
+                <td>@Html.DisplayFor(modelItem => item.NombreApto)</td>
+                <td>@Html.DisplayFor(modelItem => item.FechaCreacion)</td>
+                <td style="text-align:center;">
+                    <a href="@Url.Action("Edit", "Aptos", new { id = item.IdApto })" class="btn-action-apto">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                </td>
+                <td style="text-align:center;">
+                    <a href="@Url.Action("Delete", "Aptos", new { id = item.IdApto })" class="btn-action-apto">
+                        <i class="fas fa-trash-alt"></i> Eliminar
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

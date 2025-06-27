@@ -30,7 +30,7 @@ namespace Danchi.Controllers
         [AuthorizeRole("Administrador")]
         public async Task<ActionResult> Index()
         {
-            var propietarios = _db.Propietarios.Include(p => p.Apto);
+            var propietarios = _db.Propietarios.Include(p => p.Apto).Include(p => p.TiposDocumento);
             return View(await propietarios.ToListAsync());
         }
 
@@ -38,6 +38,7 @@ namespace Danchi.Controllers
         public ActionResult Create()
         {
             ViewBag.IdApto = new SelectList(_db.Aptos, "IdApto", "NombreApto");
+            ViewBag.IdTipoDocumento = new SelectList(_db.TiposDocumento, "IdTipoDocumento", "Abreviatura");
             return View();
         }
 
@@ -53,8 +54,8 @@ namespace Danchi.Controllers
                 TempData["AlertMessage"] = "Propietario guardado exitosamente";
                 return RedirectToAction("Index");
             }
-
             ViewBag.IdApto = new SelectList(_db.Aptos, "IdApto", "NombreApto", propietario.IdApto);
+            ViewBag.IdTipoDocumento = new SelectList(_db.TiposDocumento, "IdTipoDocumento", "Abreviatura", propietario.IdTipoDocumento);
             return View(propietario);
         }
 
@@ -71,6 +72,7 @@ namespace Danchi.Controllers
                 return HttpNotFound();
             }
             ViewBag.IdApto = new SelectList(_db.Aptos, "IdApto", "NombreApto", propietario.IdApto);
+            ViewBag.IdTipoDocumento = new SelectList(_db.TiposDocumento, "IdTipoDocumento", "Abreviatura", propietario.IdTipoDocumento);
             return View(propietario);
         }
 
@@ -88,6 +90,7 @@ namespace Danchi.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.IdApto = new SelectList(_db.Aptos, "IdApto", "NombreApto", propietario.IdApto);
+            ViewBag.IdTipoDocumento = new SelectList(_db.TiposDocumento, "IdTipoDocumento", "Abreviatura", propietario.IdTipoDocumento);
             return View(propietario);
         }
 

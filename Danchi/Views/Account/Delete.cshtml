@@ -1,49 +1,115 @@
 ﻿@model Danchi.Models.Usuario
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Eliminar Usuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<style>
+    .delete-user-container {
+        max-width: 480px;
+        margin: 2.8rem auto 0 auto;
+        background: #fff;
+        border-radius: 1.2rem;
+        box-shadow: 0 8px 32px #7bafd634, 0 2px 12px #6a11cb18;
+        padding: 2.2rem 2rem 2rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: .7rem;
+    }
 
-<h3>¿Está seguro de eliminar el usuario con la siguiente información?</h3>
-<div>
-    <h4>Usuario</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombres)
-        </dt>
+    .delete-user-title {
+        font-size: 2rem;
+        color: #ce466d;
+        font-weight: 900;
+        text-align: center;
+        margin-bottom: .5rem;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombres)
-        </dd>
+    .delete-user-question {
+        color: #7c7474;
+        font-size: 1.16rem;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 1.3rem;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Apellidos)
-        </dt>
+    .delete-user-summary dt {
+        font-weight: 700;
+        color: #ae3b62;
+        margin-top: 0.4rem;
+        margin-bottom: 0;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Apellidos)
-        </dd>
+    .delete-user-summary dd {
+        margin-bottom: .7rem;
+        color: #4b4b4b;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Correo)
-        </dt>
+    .delete-btns-row {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 1.3rem;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Correo)
-        </dd>
+    .btn-eliminar {
+        background: linear-gradient(45deg, #ff7b9b 60%, #ce466d 100%);
+        color: #fff;
+        font-weight: 700;
+        border-radius: 1rem;
+        border: none;
+        padding: 0.7rem 2.2rem;
+        font-size: 1.09rem;
+        box-shadow: 0 2px 7px #ffb6b933;
+        transition: background 0.15s;
+    }
+
+        .btn-eliminar:hover {
+            background: linear-gradient(45deg, #ae3b62 60%, #ff7b9b 100%);
+        }
+
+    .btn-cancelar {
+        color: #ae3b62;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 0.7rem;
+        padding: 0.7rem 1.1rem;
+        transition: color 0.18s, background 0.18s;
+    }
+
+        .btn-cancelar:hover {
+            background: #ffe6f1;
+            color: #ff7b9b;
+            text-decoration: underline;
+        }
+</style>
+
+<div class="delete-user-container">
+    <div class="delete-user-title">Eliminar Usuario</div>
+    <div class="delete-user-question">
+        ¿Está seguro que deseas eliminar el usuario con la siguiente información?
+    </div>
+    <dl class="delete-user-summary">
+        <dt>@Html.DisplayNameFor(model => model.Nombres)</dt>
+        <dd>@Html.DisplayFor(model => model.Nombres)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Apellidos)</dt>
+        <dd>@Html.DisplayFor(model => model.Apellidos)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Correo)</dt>
+        <dd>@Html.DisplayFor(model => model.Correo)</dd>
     </dl>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="delete-btns-row">
+            <button type="submit" class="btn-eliminar"><i class="fas fa-trash"></i> Eliminar</button>
+            <a href="@Url.Action("Index", "Usuarios")" class="btn-cancelar">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
         </div>
     }
 </div>
