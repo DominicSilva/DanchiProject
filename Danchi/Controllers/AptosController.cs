@@ -108,10 +108,18 @@ namespace Danchi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id)
         {
-            Apto apto = await _db.Aptos.FindAsync(id);
+            var apto = await _db.Aptos.FindAsync(id);
+
+            // Verifica si hay propietarios asociados a este apartamento
+            if (_db.Propietarios.Any(p => p.IdApto == apto.IdApto))
+            {
+                TempData["ErrorMessage"] = "No se puede eliminar el apartamento porque tiene propietarios asociados. Elimina o reasigna primero los propietarios relacionados.";
+                return RedirectToAction("Index");
+            }
+
             _db.Aptos.Remove(apto);
-            TempData["SuccessMessage"] = "Apto eliminado exitosamente";
             await _db.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Apartamento eliminado exitosamente";
             return RedirectToAction("Index");
         }
 

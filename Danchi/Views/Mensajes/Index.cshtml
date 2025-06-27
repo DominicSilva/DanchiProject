@@ -3,209 +3,222 @@
     ViewBag.Title = "Bandeja de Mensajes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@if (TempData["SuccessMessage"] != null)
-{
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: @Html.Raw(HttpUtility.JavaScriptStringEncode(TempData["SuccessMessage"].ToString(), true)),
-            confirmButtonText: 'Aceptar',
-            timer: 3000
-        });
-    </script>
-}
-
+<!-- ESTILOS PARA LA BANDEJA -->
 <style>
-/* Contenedor principal efecto glass */
-.bandeja-chat-container {
-    max-width: 830px;
-    margin: 2.8rem auto 0 auto;
-    background: rgba(255,255,255, 0.93);
-    border-radius: 1.5rem;
-    box-shadow: 0 8px 40px 0 #ffb6b944, 0 3px 22px #b8b8b838;
-    border: 2.2px solid #ffb6b9;
-    padding: 2.1rem 2.1rem 1.1rem 2.1rem;
-    position: relative;
-    z-index: 2;
-}
-.bandeja-header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: .7rem;
-}
-.bandeja-header-title {
-    font-size: 1.58rem;
-    font-weight: 800;
-    color: #7c7474;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: .7rem;
-    text-shadow: 0 3px 10px #ffe3ef33;
-}
-.btn-nuevo-mensaje {
-    background: linear-gradient(45deg, #1de9b6 60%, #ffb6b9 100%);
-    color: #fff;
-    font-weight: 700;
-    border-radius: 1.3rem;
-    padding: 0.6rem 1.3rem;
-    border: none;
-    font-size: 1.01rem;
-    box-shadow: 0 2px 10px #1de9b633;
-    transition: background 0.18s, box-shadow 0.18s;
-}
-.btn-nuevo-mensaje i { margin-right: 5px; }
-.btn-nuevo-mensaje:hover {
-    background: linear-gradient(45deg, #ae3b62 80%, #ffb6b9 100%);
-    color: #fff;
-}
+    .msg-container {
+        max-width: 1000px;
+        margin: 2.5rem auto;
+        background: #fff;
+        border-radius: 1.3rem;
+        box-shadow: 0 4px 24px #ebb3b370, 0 1.5px 12px #f8b6b938;
+        padding: 2.7rem 2.2rem 2.4rem 2.2rem;
+    }
 
-.tabs-chat {
-    display: flex;
-    border-bottom: 1.8px solid #ffd3dc;
-    margin-bottom: 1.1rem;
-    gap: .25rem;
-}
-.tabs-chat button {
-    background: none;
-    border: none;
-    font-weight: 600;
-    color: #7c7474;
-    padding: 0.60rem 1.9rem 0.60rem 1.9rem;
-    border-radius: 1.1rem 1.1rem 0 0;
-    font-size: 1.11rem;
-    outline: none;
-    transition: background 0.22s, color 0.18s;
-    cursor: pointer;
-}
-.tabs-chat button.active,
-.tabs-chat button:focus {
-    background: #ffd3dc;
-    color: #ae3b62;
-    font-weight: 800;
-    box-shadow: 0 2px 10px #ffb6b933;
-}
+    .msg-title {
+        text-align: center;
+        color: #8a6d6d;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+    }
 
-.chat-messages {
-    min-height: 200px;
-    padding: 1.2rem 0 .5rem 0;
-}
-.chat-message {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 0.9rem;
-}
-.message-sent {
-    align-items: flex-end;
-}
-.bubble {
-    background: linear-gradient(90deg, #ffd3dc 40%, #ffb6b9 100%);
-    color: #7c7474;
-    font-size: 1.08rem;
-    border-radius: 1.1rem 1.1rem 1.1rem 0.3rem;
-    padding: 0.8rem 1.3rem;
-    box-shadow: 0 2px 6px #ffd3dc33;
-    max-width: 92%;
-    margin-bottom: 0.22rem;
-    font-weight: 500;
-}
-.message-sent .bubble {
-    background: linear-gradient(90deg, #ede4e4 30%, #ffb6b9 100%);
-    color: #ae3b62;
-    border-radius: 1.1rem 1.1rem 0.3rem 1.1rem;
-    align-self: flex-end;
-}
-.bubble-time {
-    color: #a49595;
-    font-size: 0.98rem;
-    margin-left: .5rem;
-    margin-bottom: 0.7rem;
-}
-.message-sent .bubble-time {
-    margin-right: .5rem;
-    margin-left: 0;
-    align-self: flex-end;
-}
-.chat-empty {
-    color: #c7bcbc;
-    font-size: 1.07rem;
-    text-align: center;
-    margin-top: 1.8rem;
-}
-@@media (max-width: 900px) {
-    .bandeja-chat-container { padding: 1.1rem 0.4rem; }
-    .bandeja-header-title { font-size: 1.17rem;}
-    .bubble { font-size: 0.99rem;}
-}
+    .btn-rosa {
+        background: linear-gradient(45deg, #ff7b9b 60%, #ebb3b3 100%);
+        color: #fff !important;
+        font-weight: 700;
+        border-radius: 1.1rem;
+        border: none;
+        padding: 0.65rem 2rem;
+        font-size: 1.08rem;
+        box-shadow: 0 1.5px 10px #ffb6b933;
+        transition: background 0.2s;
+        margin-bottom: 1rem;
+    }
+    .btn-rosa:hover {
+        background: linear-gradient(45deg, #ce466d 60%, #ebb3b3 100%);
+        color: #fff !important;
+    }
+    .btn-mini {
+        padding: 0.38rem 1.2rem !important;
+        font-size: 0.97rem !important;
+        margin-right: 0.3rem;
+    }
+
+    .msg-tabs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.6rem;
+        justify-content: center;
+    }
+    .msg-tab {
+        background: #f9f8f8;
+        color: #ae3b62;
+        border-radius: 1.1rem 1.1rem 0 0;
+        border: 1.5px solid #ead8e4;
+        padding: 0.6rem 2rem;
+        font-weight: 600;
+        box-shadow: 0 0.5px 4px #ffb6b920;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        border-bottom: 2.5px solid transparent;
+    }
+    .msg-tab.active, .msg-tab:hover {
+        background: #ffe3ea;
+        color: #ce466d;
+        border-bottom: 2.5px solid #ffb6b9;
+    }
+
+    .msg-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #f9f8f8;
+        border-radius: 1.1rem;
+        overflow: hidden;
+        box-shadow: 0 2px 12px #ffb6b920;
+    }
+    .msg-table th, .msg-table td {
+        padding: 1rem 1.2rem;
+        text-align: left;
+        font-size: 1.04rem;
+        color: #6d5a5a;
+        border-bottom: 1.5px solid #ead8e4;
+        background: #f9f8f8;
+    }
+    .msg-table th {
+        background: #ffe3ea;
+        color: #ae3b62;
+        font-weight: 700;
+    }
+    .msg-table tr:last-child td {
+        border-bottom: none;
+    }
+    .msg-leido {
+        color: #21bf73;
+        font-weight: 600;
+    }
+    .msg-noleido {
+        color: #ce466d;
+        font-weight: 600;
+    }
+    @@media (max-width: 800px) {
+        .msg-container { padding: 1rem 0.4rem; }
+        .msg-title { font-size: 1.3rem; }
+        .msg-table th, .msg-table td { padding: 0.6rem 0.3rem; font-size: 0.93rem; }
+    }
 </style>
 
-<div class="bandeja-chat-container">
-    <div class="bandeja-header-row">
-        <span class="bandeja-header-title">
-            <i class="fas fa-comments"></i>
-            Bandeja de Mensajes
-        </span>
-        <a href="@Url.Action("Create", "Mensajes")" class="btn-nuevo-mensaje">
-            <i class="fas fa-paper-plane"></i> Nuevo Mensaje
-        </a>
+<div class="msg-container">
+    <div class="msg-title">Bandeja de Mensajes</div>
+    <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom:1.1rem;">
+        <div>
+            <a href="@Url.Action("Create", "Mensajes")" class="btn-rosa">
+                <i class="fas fa-paper-plane"></i> Nuevo Mensaje
+            </a>
+        </div>
     </div>
 
-    <div class="tabs-chat">
-        <button type="button" id="tabbtn-recibidos" class="active" onclick="showTabChat('recibidos')">Recibidos</button>
-        <button type="button" id="tabbtn-enviados" onclick="showTabChat('enviados')">Enviados</button>
+    <!-- Tabs -->
+    <div class="msg-tabs">
+        <button class="msg-tab active" onclick="showTab('recibidos')">Recibidos</button>
+        <button class="msg-tab" onclick="showTab('enviados')">Enviados</button>
     </div>
 
     <!-- Recibidos -->
-    <div id="tab-recibidos" class="chat-messages">
+    <div id="recibidos" class="tab-content-msg">
         @if (Model.Recibidos != null && Model.Recibidos.Any())
         {
-            foreach (var m in Model.Recibidos)
-            {
-                <div class="chat-message message-received">
-                    <div class="bubble">
-                        <b>@m.Emisor.Nombres:</b> @m.Descripcion
-                    </div>
-                    <div class="bubble-time">@m.FechaEnvio.ToString("dd/MM/yyyy HH:mm")</div>
-                </div>
-            }
+            <div style="overflow-x:auto;">
+                <table class="msg-table">
+                    <thead>
+                        <tr>
+                            <th>De</th>
+                            <th>Asunto</th>
+                            <th>Fecha</th>
+                            <th>Leído</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var msg in Model.Recibidos)
+                        {
+                            <tr>
+                                <td>@(msg.Emisor.Nombres + " " + msg.Emisor.Apellidos) </td>
+                                <td>@msg.Asunto</td>
+                                <td>@msg.FechaEnvio.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (msg.Leido)
+                                    {
+                                        <span class="msg-leido"><i class="fas fa-check-circle"></i> Leído</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="msg-noleido"><i class="fas fa-envelope"></i> No leído</span>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Ver", "Details", new { id = msg.IdMensaje }, new { @class = "btn-rosa btn-mini" })
+                                    @Html.ActionLink("Responder", "Reply", new { id = msg.IdMensaje }, new { @class = "btn-rosa btn-mini" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
         else
         {
-            <div class="chat-empty">No tienes mensajes recibidos.</div>
+            <div class="alert alert-info">No tienes mensajes recibidos.</div>
         }
     </div>
 
     <!-- Enviados -->
-    <div id="tab-enviados" class="chat-messages" style="display:none;">
+    <div id="enviados" class="tab-content-msg" style="display:none;">
         @if (Model.Enviados != null && Model.Enviados.Any())
         {
-            foreach (var m in Model.Enviados)
-            {
-                <div class="chat-message message-sent">
-                    <div class="bubble">
-                        <b>Tú:</b> @m.Descripcion
-                    </div>
-                    <div class="bubble-time">@m.FechaEnvio.ToString("dd/MM/yyyy HH:mm")</div>
-                </div>
-            }
+            <div style="overflow-x:auto;">
+                <table class="msg-table">
+                    <thead>
+                        <tr>
+                            <th>Para</th>
+                            <th>Asunto</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var msg in Model.Enviados)
+                        {
+                            <tr>
+                                <td>@(msg.Receptor.Nombres + " " + msg.Receptor.Apellidos) </td>
+                                <td>@msg.Asunto</td>
+                                <td>@msg.FechaEnvio.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @Html.ActionLink("Ver", "Details", new { id = msg.IdMensaje }, new { @class = "btn-rosa btn-mini" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
         else
         {
-            <div class="chat-empty">No tienes mensajes enviados.</div>
+            <div class="alert alert-info">No has enviado mensajes.</div>
         }
     </div>
 </div>
 
 <script>
-    function showTabChat(tab) {
-        document.getElementById('tab-recibidos').style.display = (tab === 'recibidos') ? 'block' : 'none';
-        document.getElementById('tab-enviados').style.display = (tab === 'enviados') ? 'block' : 'none';
-        document.getElementById('tabbtn-recibidos').classList.remove('active');
-        document.getElementById('tabbtn-enviados').classList.remove('active');
-        document.getElementById('tabbtn-' + tab).classList.add('active');
+    // Tabs funcionales (sin Bootstrap JS)
+    function showTab(tab) {
+        document.getElementById("recibidos").style.display = tab === "recibidos" ? "" : "none";
+        document.getElementById("enviados").style.display = tab === "enviados" ? "" : "none";
+        let tabs = document.getElementsByClassName("msg-tab");
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove("active");
+        }
+        if (tab === "recibidos") tabs[0].classList.add("active");
+        if (tab === "enviados") tabs[1].classList.add("active");
     }
 </script>

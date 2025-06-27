@@ -1,43 +1,98 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Responder Mensaje";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @model Danchi.Models.Mensaje
 
-<h2>Responder a: @(Model.Receptor != null ? Model.Receptor.Nombres + " " + Model.Receptor.Apellidos : "Usuario")</h2>
+<style>
+.msg-container {
+    max-width: 900px;
+    margin: 2.5rem auto;
+    background: #fff;
+    border-radius: 1.3rem;
+    box-shadow: 0 4px 24px #ebb3b370, 0 1.5px 12px #f8b6b938;
+    padding: 2.7rem 2.2rem 2.4rem 2.2rem;
+}
+.msg-title {
+    text-align: center;
+    color: #8a6d6d;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+.msg-block {
+    background: #f9f8f8;
+    border-radius: 1rem;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.4rem;
+    box-shadow: 0 1.5px 8px #ffb6b920;
+}
+.msg-block label {
+    font-weight: 600; color: #ae3b62; margin-bottom: 0.5rem; display: block;
+}
+.form-control, .msg-mensaje {
+    border-radius: 1rem !important;
+    border: 1.5px solid #ead8e4 !important;
+    font-size: 1.06rem;
+    padding: 0.9rem 1.2rem !important;
+    background: #fff !important;
+    color: #7c7474;
+}
+.btn-rosa {
+    background: linear-gradient(45deg, #ff7b9b 60%, #ebb3b3 100%);
+    color: #fff !important;
+    font-weight: 700;
+    border-radius: 1.1rem;
+    border: none;
+    padding: 0.75rem 2.2rem;
+    font-size: 1.07rem;
+    box-shadow: 0 1.5px 10px #ffb6b933;
+    transition: background 0.2s;
+    margin-right: .7rem;
+}
+.btn-rosa:hover {
+    background: linear-gradient(45deg, #ce466d 60%, #ebb3b3 100%);
+    color: #fff !important;
+}
+@@media (max-width: 800px) {
+    .msg-container { padding: 1rem 0.4rem; }
+    .msg-title { font-size: 1.22rem; }
+}
+</style>
 
-@using (Html.BeginForm("Reply", "Mensajes", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.IdReceptor)
-    @Html.HiddenFor(m => m.MensajePadreId)
+<div class="msg-container">
+    <div class="msg-title">
+        Responder a: @(Model.Receptor != null ? Model.Receptor.Nombres + " " + Model.Receptor.Apellidos : "Usuario")
+    </div>
+    @using (Html.BeginForm("Reply", "Mensajes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.IdReceptor)
+        @Html.HiddenFor(m => m.MensajePadreId)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Asunto)
-        <div class="col-md-10">
+        <div class="msg-block">
+            @Html.LabelFor(model => model.Asunto)
             @Html.TextBoxFor(model => model.Asunto, new { @class = "form-control", @readonly = "readonly" })
             @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    <div class="form-group mt-2">
-        @Html.LabelFor(model => model.Descripcion)
-        <div class="col-md-10">
+        <div class="msg-block">
+            @Html.LabelFor(model => model.Descripcion)
             @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = 5 })
             @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    <div class="form-group mt-2">
-        @Html.LabelFor(model => model.ArchivoAdjunto, "Archivo Soporte (Opcional)")
-        <div class="col-md-10">
+        <div class="msg-block">
+            @Html.LabelFor(model => model.ArchivoAdjunto, "Archivo Soporte (Opcional)")
             <input type="file" name="archivo" class="form-control" accept=".pdf,application/pdf" />
         </div>
-    </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Enviar Respuesta</button>
-    <a href="@Url.Action("Index", "Mensajes")" class="btn btn-secondary mt-3">Cancelar</a>
-}
+        <div style="text-align: right;">
+            <button type="submit" class="btn-rosa">Enviar Respuesta</button>
+            <a href="@Url.Action("Index", "Mensajes")" class="btn-rosa" style="background: #ececec; color:#ae3b62;">Cancelar</a>
+        </div>
+    }
+</div>
+
 

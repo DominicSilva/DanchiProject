@@ -57,6 +57,7 @@ namespace Danchi.Controllers
         {
             if (ModelState.IsValid)
             {
+                reserva.IdUsuario = SessionHelper.UserId.Value;
                 _db.Reservas.Add(reserva);
                 await _db.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Reserva guardada exitosamente";
@@ -88,6 +89,7 @@ namespace Danchi.Controllers
         {
             if (ModelState.IsValid)
             {
+                reserva.IdUsuario = SessionHelper.UserId.Value;
                 _db.Entry(reserva).State = EntityState.Modified;
                 await _db.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Reserva actualizada exitosamente";
